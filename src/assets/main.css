@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+/**
+ * Theme tokens ported from the "Liminal Archive" Stitch design system
+ * (project 8432011651729206521 · Guía de Estilo Web). Registering them
+ * under @theme makes them available as Tailwind utilities, e.g.
+ * `bg-liminal-primary`, `text-liminal-on-primary`, `font-mono`.
+ */
+@theme {
+  --font-sans: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --color-liminal-bg: #090a0d;
+  --color-liminal-surface: #121418;
+  --color-liminal-surface-raised: #1a1b20;
+  --color-liminal-primary: #ffb800;
+  --color-liminal-primary-hover: #e5a600;
+  --color-liminal-on-primary: #090a0d;
+}
+
+@layer base {
+  html,
+  body,
+  #app {
+    height: 100%;
+  }
+
+  body {
+    @apply m-0 bg-liminal-bg font-sans text-white antialiased;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
