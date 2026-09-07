@@ -21,7 +21,6 @@ const emit = defineEmits<{
   filterClick: []
   searchClick: []
   menuClick: []
-  registriesClick: []
 }>()
 </script>
 
@@ -39,7 +38,7 @@ const emit = defineEmits<{
     >
       <NavItem label="Home" :to="{ name: 'home' }" />
       <NavItem label="Categorías" :to="{ name: 'class' }" />
-      <NavItem label="Registros" @click="emit('registriesClick')" />
+      <NavItem label="Registros" :to="{ name: 'reports' }" />
     </nav>
 
     <div class="flex items-center gap-5 md:gap-6">

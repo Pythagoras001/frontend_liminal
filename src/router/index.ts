@@ -15,6 +15,12 @@ const router = createRouter({
         import('@/features/login/screens/loginResgisterScreen/LoginRegisterScreen.vue'),
     },
     {
+      path: '/reports',
+      name: 'reports',
+      component: () =>
+        import('@/features/report/screens/exploreReportScreen/ExploreReportScreen.vue'),
+    },
+    {
       path: '/class',
       name: 'class',
       component: () =>
