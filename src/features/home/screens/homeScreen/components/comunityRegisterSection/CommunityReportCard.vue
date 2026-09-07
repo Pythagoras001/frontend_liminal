@@ -39,7 +39,7 @@ const badgeClasses = computed(() => {
   >
     <span
       class="relative block w-full overflow-hidden bg-neutral-900"
-      :class="featured ? 'aspect-[16/11]' : 'aspect-[16/9]'"
+      :class="featured ? 'aspect-[3/4]' : 'aspect-[16/9]'"
     >
       <img
         :src="report.principalEvidence.image.mediumUrl"

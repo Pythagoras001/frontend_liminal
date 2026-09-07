@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
+import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
 import LevelShowcase from './components/headerSection/LevelShowcase.vue'
 import FeaturedReportsSection from './components/featureSection/FeaturedReportsSection.vue'
 import CommunityRegisterSection from './components/comunityRegisterSection/CommunityRegisterSection.vue'
@@ -64,6 +65,21 @@ function viewAllRegisters() {
   // TODO: navegar al listado completo de registros cuando exista la ruta correspondiente.
   console.info('Ver todos los registros')
 }
+
+function openTerms() {
+  // TODO: navegar a los términos de expedición cuando exista la ruta correspondiente.
+  console.info('Términos de expedición')
+}
+
+function openSecurityProtocol() {
+  // TODO: navegar al protocolo de seguridad cuando exista la ruta correspondiente.
+  console.info('Protocolo de seguridad')
+}
+
+function openTerminal() {
+  // TODO: navegar al terminal cuando exista la ruta correspondiente.
+  console.info('Terminal')
+}
 </script>
 
 <template>
@@ -99,6 +115,12 @@ function viewAllRegisters() {
       @select="selectReport"
       @publish="publishFinding"
       @view-all="viewAllRegisters"
+    />
+
+    <Footer
+      @terms-click="openTerms"
+      @security-click="openSecurityProtocol"
+      @terminal-click="openTerminal"
     />
   </div>
 </template>
