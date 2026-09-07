@@ -1,14 +1,11 @@
 <script setup lang="ts">
+import NavItem from './NavItem.vue'
+
 interface Props {
-  /** Etiqueta del botón de filtro, ej. "Todos los niveles". */
   filterLabel?: string
-  /** Sector mostrado en la telemetría central, ej. "Sector Alpha". */
   sector?: string
-  /** Terminal mostrado en la telemetría central, ej. "Terminal 09". */
   terminal?: string
-  /** Nombre mostrado junto al avatar del usuario. */
   explorerName?: string
-  /** URL del avatar del explorador. */
   avatarUrl?: string
 }
 
@@ -24,31 +21,28 @@ const emit = defineEmits<{
   filterClick: []
   searchClick: []
   menuClick: []
+  homeClick: []
+  categoriesClick: []
+  registriesClick: []
 }>()
 </script>
 
 <template>
-  <header class="flex w-full items-center justify-between gap-4 px-5 pt-8 pb-4 md:px-12">
+  <header class="relative flex w-full items-center justify-between gap-4 px-5 pt-8 pb-4 md:px-12">
     <div class="flex items-center gap-6">
       <span class="text-xl font-bold tracking-[0.28em] text-white uppercase md:text-2xl"
         >LIMINAL</span
       >
-      <button
-        type="button"
-        class="inline-flex items-center justify-center rounded-full border border-white/20 bg-black/30 px-5 py-2 text-xs font-medium text-white/90 backdrop-blur-sm transition-all duration-200 outline-none hover:border-white/40 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary md:text-sm"
-        @click="emit('filterClick')"
-      >
-        {{ filterLabel }}
-      </button>
     </div>
 
-    <div
-      class="hidden items-center gap-2 font-mono text-xs tracking-wider text-white/80 md:flex md:text-sm"
-      aria-hidden="true"
+    <nav
+      class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex"
+      aria-label="Navegación principal"
     >
-      <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-      <span>{{ sector }} · {{ terminal }}</span>
-    </div>
+      <NavItem label="Home" @click="emit('homeClick')" />
+      <NavItem label="Categorías" @click="emit('categoriesClick')" />
+      <NavItem label="Registros" @click="emit('registriesClick')" />
+    </nav>
 
     <div class="flex items-center gap-5 md:gap-6">
       <div class="flex items-center gap-3">
