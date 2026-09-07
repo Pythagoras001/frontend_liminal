@@ -16,11 +16,11 @@ export const featuredReports: Report[] = [
     principalEvidence: {
       image: {
         thumbnailUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuC0yEoQGU12qNQT_kvZLkZzN0II41a7q4XT4SP08-VzY78aOiakUh_AVDZgT2O8yOJzl6rQ0bX_tI5Mly_Xy0LkqI-acjsQ7m3J3ZWpcoVVnXX2mWDZBpZtEwnLZ9RDzG9hBs8nyNZY_klMClojBPrIYZKGbB8gyJfeltUh0wKrXACswHcxHSgXl5tmq1n5I8r-baX72DJm7_Un6p0fSXVLWYw8S_xbo6GUbbW4YuSdYXim-PSnNfTv',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuCl_0_fyehvQwDzLo_cTm1oNznbz9FzyTI4w8nEGaU7v56azwgRyNqziH9ncZClfkcRGrAlqyzdLVTxjLjcrfhMCAWOmIeClctvTYbroxTzoCq9E-CSg2sNDcoe_RG9TN3AIWjSOsYD1V9b60lIKdxp1oBFcLlnhEfJQpfOKyv1_YeMFkNuYC8jwHRs_v8iBf_WGRShcWgEb0IzY6q1OVDYh__KMMEXzVXUwv06Xv8MGlladyven8kO',
         mediumUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuC0yEoQGU12qNQT_kvZLkZzN0II41a7q4XT4SP08-VzY78aOiakUh_AVDZgT2O8yOJzl6rQ0bX_tI5Mly_Xy0LkqI-acjsQ7m3J3ZWpcoVVnXX2mWDZBpZtEwnLZ9RDzG9hBs8nyNZY_klMClojBPrIYZKGbB8gyJfeltUh0wKrXACswHcxHSgXl5tmq1n5I8r-baX72DJm7_Un6p0fSXVLWYw8S_xbo6GUbbW4YuSdYXim-PSnNfTv',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuCl_0_fyehvQwDzLo_cTm1oNznbz9FzyTI4w8nEGaU7v56azwgRyNqziH9ncZClfkcRGrAlqyzdLVTxjLjcrfhMCAWOmIeClctvTYbroxTzoCq9E-CSg2sNDcoe_RG9TN3AIWjSOsYD1V9b60lIKdxp1oBFcLlnhEfJQpfOKyv1_YeMFkNuYC8jwHRs_v8iBf_WGRShcWgEb0IzY6q1OVDYh__KMMEXzVXUwv06Xv8MGlladyven8kO',
         originalUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuC0yEoQGU12qNQT_kvZLkZzN0II41a7q4XT4SP08-VzY78aOiakUh_AVDZgT2O8yOJzl6rQ0bX_tI5Mly_Xy0LkqI-acjsQ7m3J3ZWpcoVVnXX2mWDZBpZtEwnLZ9RDzG9hBs8nyNZY_klMClojBPrIYZKGbB8gyJfeltUh0wKrXACswHcxHSgXl5tmq1n5I8r-baX72DJm7_Un6p0fSXVLWYw8S_xbo6GUbbW4YuSdYXim-PSnNfTv',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuCl_0_fyehvQwDzLo_cTm1oNznbz9FzyTI4w8nEGaU7v56azwgRyNqziH9ncZClfkcRGrAlqyzdLVTxjLjcrfhMCAWOmIeClctvTYbroxTzoCq9E-CSg2sNDcoe_RG9TN3AIWjSOsYD1V9b60lIKdxp1oBFcLlnhEfJQpfOKyv1_YeMFkNuYC8jwHRs_v8iBf_WGRShcWgEb0IzY6q1OVDYh__KMMEXzVXUwv06Xv8MGlladyven8kO',
       },
     },
     author: {
