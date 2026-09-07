@@ -21,6 +21,13 @@ const router = createRouter({
         import('@/features/report/screens/exploreReportScreen/ExploreReportScreen.vue'),
     },
     {
+      // Debe declararse antes que `/reports/:id` para que "new" no se lea como un id.
+      path: '/reports/new',
+      name: 'report-create',
+      component: () =>
+        import('@/features/report/screens/createReportScreen/CreateReportScreen.vue'),
+    },
+    {
       // `props: true` pasa el `:id` de la URL como prop de la pantalla.
       path: '/reports/:id',
       name: 'report-detail',

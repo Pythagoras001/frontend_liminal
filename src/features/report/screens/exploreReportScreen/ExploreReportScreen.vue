@@ -30,8 +30,7 @@ function changePage(nextPage: number) {
 }
 
 function createReport() {
-  // TODO: navegar al formulario de creación cuando exista la ruta correspondiente.
-  console.info('Crear reporte')
+  router.push({ name: 'report-create' })
 }
 
 function openFilters() {
