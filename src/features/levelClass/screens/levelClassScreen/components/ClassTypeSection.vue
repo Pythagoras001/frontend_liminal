@@ -1,28 +1,21 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
-import type { LevelClass } from '@/features/levelClass/model/LevelClass'
+import type { SurvivalClassTypeOption } from '@/features/levelClass/hooks/useSurvivalClassTypeFilter'
 import ClassTypeRow from './ClassTypeRow.vue'
 
 interface Props {
-  classes: LevelClass[]
+  types: SurvivalClassTypeOption[]
+  /** Tipo cuyas clases se están mostrando en el listado. */
+  activeType: string | null
+  /** Id del listado de clases que este filtro controla. */
+  controlsId: string
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const emit = defineEmits<{
-  select: [id: number]
+  select: [type: string]
   learnMore: []
 }>()
-
-const selectedId = shallowRef<number | null>(null)
-
-/** Sin selección explícita queda marcado el primer tipo, como en el diseño. */
-const activeId = computed(() => selectedId.value ?? props.classes[0]?.id ?? null)
-
-function selectType(id: number) {
-  selectedId.value = id
-  emit('select', id)
-}
 </script>
 
 <template>
@@ -45,17 +38,19 @@ function selectType(id: number) {
         Tipos de clase
       </h2>
       <p class="mt-2 text-xs leading-relaxed text-neutral-400">
-        Clasificaciones especiales para riesgos que no siguen una escala numérica.
+        Elige un tipo para ver únicamente las clases clasificadas bajo ese criterio.
       </p>
     </div>
 
     <div class="flex flex-col divide-y divide-white/10 border-t border-b border-white/10">
       <ClassTypeRow
-        v-for="levelClass in classes"
-        :key="levelClass.id"
-        :level-class="levelClass"
-        :active="levelClass.id === activeId"
-        @select="selectType"
+        v-for="option in types"
+        :key="option.type"
+        :type="option.type"
+        :count="option.count"
+        :active="option.type === activeType"
+        :controls-id="controlsId"
+        @select="emit('select', $event)"
       />
     </div>
 

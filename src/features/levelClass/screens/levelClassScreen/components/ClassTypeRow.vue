@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { LevelClass } from '@/features/levelClass/model/LevelClass'
 import { getSurvivalClassTypeLabel } from '@/features/levelClass/model/SurvivalClassType'
 import ClassTypeIcon from './ClassTypeIcon.vue'
 
 interface Props {
-  levelClass: LevelClass
+  type: string
+  /** Número de clases del catálogo que pertenecen a este tipo. */
+  count: number
   active?: boolean
+  /** Id del listado de clases que esta fila filtra. */
+  controlsId: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -14,10 +17,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  select: [id: number]
+  select: [type: string]
 }>()
 
-const label = computed(() => getSurvivalClassTypeLabel(props.levelClass.type))
+const label = computed(() => getSurvivalClassTypeLabel(props.type))
 </script>
 
 <template>
@@ -26,7 +29,8 @@ const label = computed(() => getSurvivalClassTypeLabel(props.levelClass.type))
     class="group relative flex w-full items-center justify-between px-3 py-3.5 text-left outline-none transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-liminal-primary"
     :class="active ? 'bg-white/5' : 'hover:bg-white/5'"
     :aria-current="active ? 'true' : undefined"
-    @click="emit('select', levelClass.id)"
+    :aria-controls="controlsId"
+    @click="emit('select', type)"
   >
     <span
       v-if="active"
@@ -39,7 +43,7 @@ const label = computed(() => getSurvivalClassTypeLabel(props.levelClass.type))
         class="flex h-6 w-6 items-center justify-center transition-colors"
         :class="active ? 'text-emerald-400' : 'text-neutral-400 group-hover:text-white'"
       >
-        <ClassTypeIcon :type="levelClass.type" />
+        <ClassTypeIcon :type="type" />
       </span>
       <span
         class="font-mono text-xs tracking-[0.2em] uppercase transition-colors"
@@ -53,11 +57,20 @@ const label = computed(() => getSurvivalClassTypeLabel(props.levelClass.type))
       </span>
     </span>
 
-    <span
-      aria-hidden="true"
-      class="font-mono text-base text-neutral-600 transition-all group-hover:translate-x-0.5 group-hover:text-neutral-300"
-    >
-      ›
+    <span class="flex items-center gap-3">
+      <span
+        class="font-mono text-[10px] tabular-nums transition-colors"
+        :class="active ? 'text-emerald-400' : 'text-neutral-600 group-hover:text-neutral-300'"
+      >
+        {{ count }}
+        <span class="sr-only">{{ count === 1 ? 'clase' : 'clases' }}</span>
+      </span>
+      <span
+        aria-hidden="true"
+        class="font-mono text-base text-neutral-600 transition-all group-hover:translate-x-0.5 group-hover:text-neutral-300"
+      >
+        ›
+      </span>
     </span>
   </button>
 </template>

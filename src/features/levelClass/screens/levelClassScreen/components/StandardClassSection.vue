@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
 import type { LevelClass } from '@/features/levelClass/model/LevelClass'
+import { getSurvivalClassTypeLabel } from '@/features/levelClass/model/SurvivalClassType'
 import StandardClassCard from './StandardClassCard.vue'
 import StandardClassRow from './StandardClassRow.vue'
+import { getClassDigit } from './survivalClassAccent'
 
 interface Props {
   classes: LevelClass[]
+  /** Tipo al que pertenecen las clases recibidas; encabeza el listado. */
+  classType: string | null
+  /** Id del contenedor, referenciado por el filtro de tipos. */
+  listId: string
 }
 
 const props = defineProps<Props>()
@@ -33,21 +39,65 @@ function expandClass(id: number) {
   hasUserExpanded.value = true
   emit('select', id)
 }
+
+/**
+ * Al cambiar de tipo el acordeón vuelve a su estado inicial: la clase expandida
+ * anterior ya no está en la lista y el foco debe quedarse en el filtro.
+ */
+watch(
+  () => props.classes,
+  () => {
+    expandedId.value = null
+    hasUserExpanded.value = false
+  },
+)
+
+const typeLabel = computed(() =>
+  props.classType === null ? 'Sin tipo' : getSurvivalClassTypeLabel(props.classType),
+)
+
+/** Rango de la escala numérica; los tipos especiales no siguen ninguna. */
+const scaleLabel = computed(() => {
+  const digits = props.classes
+    .map((levelClass) => getClassDigit(levelClass.classNumber))
+    .filter((digit) => digit !== '')
+    .map(Number)
+
+  if (digits.length === 0) return 'Sin escala'
+
+  const min = Math.min(...digits)
+  const max = Math.max(...digits)
+
+  return min === max ? `Sector: ${min}` : `Sector: ${min}-${max}`
+})
 </script>
 
 <template>
-  <section class="flex flex-col lg:col-span-7" aria-labelledby="clases-estandar-titulo">
+  <section class="flex flex-col lg:col-span-7" aria-labelledby="clases-listado-titulo">
     <div class="mb-5 flex items-center justify-between border-b border-white/10 pb-3">
       <h2
-        id="clases-estandar-titulo"
+        id="clases-listado-titulo"
+        aria-live="polite"
         class="font-mono text-xs font-semibold tracking-[0.22em] text-neutral-400 uppercase"
       >
-        Clases estándar
+        Clases · {{ typeLabel }}
       </h2>
-      <span class="font-mono text-[10px] text-neutral-600 uppercase">Sector: 0-5</span>
+      <span class="font-mono text-[10px] text-neutral-600 uppercase">{{ scaleLabel }}</span>
     </div>
 
-    <div class="flex flex-col divide-y divide-white/10 border-t border-b border-white/10">
+    <p
+      v-if="classes.length === 0"
+      :id="listId"
+      class="border-t border-b border-white/10 px-3 py-6 font-mono text-xs text-neutral-500 uppercase"
+    >
+      No hay clases registradas para este tipo.
+    </p>
+
+    <div
+      v-else
+      :id="listId"
+      class="flex flex-col divide-y divide-white/10 border-t border-b border-white/10"
+    >
       <Transition
         v-for="levelClass in classes"
         :key="levelClass.id"

@@ -35,3 +35,11 @@ function isSurvivalClassType(value: string): value is SurvivalClassType {
 export function getSurvivalClassTypeLabel(type: string): string {
   return isSurvivalClassType(type) ? SURVIVAL_CLASS_TYPE_LABELS[type] : type
 }
+
+/**
+ * Orden de presentación de los tipos en la interfaz: el mismo en el que están
+ * declarados en el enum, con las clases estándar en primer lugar.
+ */
+export const SURVIVAL_CLASS_TYPE_ORDER = Object.keys(
+  SURVIVAL_CLASS_TYPE_LABELS,
+) as SurvivalClassType[]

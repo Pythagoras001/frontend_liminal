@@ -18,9 +18,16 @@ defineProps<Props>()
     stroke="currentColor"
     stroke-width="1.75"
   >
+    <!-- Estándar: hexágono de la escala numérica -->
+    <polygon
+      v-if="type === SurvivalClassType.STANDARD"
+      points="12,2 21,7 21,17 12,22 3,17 3,7"
+      stroke-linejoin="round"
+    />
+
     <!-- Ambiental: cordillera -->
     <path
-      v-if="type === SurvivalClassType.ENVIRONMENTAL"
+      v-else-if="type === SurvivalClassType.ENVIRONMENTAL"
       d="M3 19L10 6l5 9 2-3.5L21 19H3z"
       stroke-linecap="round"
       stroke-linejoin="round"
