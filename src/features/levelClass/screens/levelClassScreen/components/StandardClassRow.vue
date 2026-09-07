@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LevelClass } from '@/features/levelClass/model/LevelClass'
+import { getClassNumberLabel, type LevelClass } from '@/features/levelClass/model/LevelClass'
 import { DEFAULT_ACCENT } from './survivalClassAccent'
 
 interface Props {
@@ -33,10 +33,10 @@ const hoverTitle = DEFAULT_ACCENT.hoverTitle
           class="h-12 w-12 flex-shrink-0 object-contain object-center"
         />
         <span
-          class="w-24 text-xl font-bold tracking-wide text-white uppercase transition-colors"
+          class="w-28 text-xl font-bold tracking-wide whitespace-nowrap text-white uppercase transition-colors"
           :class="hoverTitle"
         >
-          {{ levelClass.classNumber }}
+          {{ getClassNumberLabel(levelClass.classNumber) }}
         </span>
         <span class="font-mono text-[11px] tracking-wider text-neutral-400 uppercase">
           {{ levelClass.securityLevel }}

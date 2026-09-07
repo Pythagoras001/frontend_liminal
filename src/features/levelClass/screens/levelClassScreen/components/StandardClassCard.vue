@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, useId, useTemplateRef } from 'vue'
-import type { LevelClass } from '@/features/levelClass/model/LevelClass'
+import { getClassNumberLabel, type LevelClass } from '@/features/levelClass/model/LevelClass'
 import { DEFAULT_ACCENT } from './survivalClassAccent'
 
 interface Props {
@@ -32,6 +32,8 @@ onMounted(() => {
 })
 
 const accent = DEFAULT_ACCENT.accent
+
+const classNumberLabel = computed(() => getClassNumberLabel(props.levelClass.classNumber))
 
 /** Las tres etiquetas de estado que el diseño muestra bajo el título. */
 const statusTags = computed(() => [
@@ -69,7 +71,7 @@ const statusTags = computed(() => [
                 :aria-controls="panelId"
                 aria-disabled="true"
               >
-                {{ levelClass.classNumber }}
+                {{ classNumberLabel }}
               </button>
             </h3>
           </div>
@@ -137,7 +139,7 @@ const statusTags = computed(() => [
     >
       <img
         :src="levelClass.iconImage.mediumUrl"
-        :alt="`Nivel representativo de la ${levelClass.classNumber.toLowerCase()}`"
+        :alt="`Nivel representativo de la ${classNumberLabel.toLowerCase()}`"
         loading="lazy"
         class="h-full w-full object-cover object-center brightness-90 contrast-125 grayscale-[20%] transition-transform duration-700 hover:scale-105"
       />

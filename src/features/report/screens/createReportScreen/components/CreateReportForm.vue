@@ -51,7 +51,7 @@ function handleSubmit() {
   emit('submit', {
     ...form,
     levelClassId: Number(levelClass.value),
-    galleryEvidences: [...form.galleryEvidences],
+    galeryEvidences: [...form.galeryEvidences],
   })
 }
 </script>
@@ -110,14 +110,14 @@ function handleSubmit() {
     <FormField label="Descripción de la imagen" control-id="reporte-pie-foto">
       <input
         id="reporte-pie-foto"
-        v-model="form.principalEvidenceCaption"
+        v-model="form.principalEvidenceDescription"
         type="text"
         placeholder="Añadir pie de foto o notas visuales del hallazgo..."
         class="w-full rounded border border-white/10 bg-liminal-surface px-4 py-3 font-mono text-sm text-neutral-200 placeholder-white/30 transition-colors focus:border-liminal-primary focus:ring-1 focus:ring-liminal-primary focus:outline-none"
       />
     </FormField>
 
-    <GallerySection v-model="form.galleryEvidences" />
+    <GallerySection v-model="form.galeryEvidences" />
 
     <div class="border-t border-white/10 pt-4"></div>
 

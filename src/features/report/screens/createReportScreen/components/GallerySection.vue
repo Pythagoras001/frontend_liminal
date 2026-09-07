@@ -1,20 +1,31 @@
 <script setup lang="ts">
 import { shallowRef, useId } from 'vue'
+import {
+  createEvidenceDraft,
+  type NewReportEvidenceDraft,
+} from '@/features/report/model/NewReportDraft'
 import EvidenceDropzone from './EvidenceDropzone.vue'
 import EvidencePreview from './EvidencePreview.vue'
 
-const files = defineModel<File[]>({ required: true })
+const evidences = defineModel<NewReportEvidenceDraft[]>({ required: true })
 
 const panelId = useId()
+const descriptionId = useId()
 /** Arranca plegada, como en el diseño; se abre al añadir imágenes. */
 const isOpen = shallowRef(false)
 
 function addFiles(added: File[]) {
-  files.value = [...files.value, ...added]
+  evidences.value = [...evidences.value, ...added.map(createEvidenceDraft)]
 }
 
 function removeAt(index: number) {
-  files.value = files.value.filter((_, position) => position !== index)
+  evidences.value = evidences.value.filter((_, position) => position !== index)
+}
+
+function setDescription(index: number, description: string) {
+  evidences.value = evidences.value.map((evidence, position) =>
+    position === index ? { ...evidence, description } : evidence,
+  )
 }
 </script>
 
@@ -49,8 +60,8 @@ function removeAt(index: number) {
         >
           Agregar imágenes a la galería
         </span>
-        <span v-if="files.length" class="font-mono text-[11px] text-liminal-primary">
-          {{ files.length }}
+        <span v-if="evidences.length" class="font-mono text-[11px] text-liminal-primary">
+          {{ evidences.length }}
         </span>
       </span>
 
@@ -75,9 +86,25 @@ function removeAt(index: number) {
         @select="addFiles"
       />
 
-      <ul v-if="files.length" class="space-y-2">
-        <li v-for="(file, index) in files" :key="`${file.name}-${file.lastModified}`">
-          <EvidencePreview :file="file" @remove="removeAt(index)" />
+      <ul v-if="evidences.length" class="space-y-3">
+        <li
+          v-for="(evidence, index) in evidences"
+          :key="`${evidence.file.name}-${evidence.file.lastModified}`"
+          class="space-y-2"
+        >
+          <EvidencePreview :file="evidence.file" @remove="removeAt(index)" />
+
+          <label class="sr-only" :for="`${descriptionId}-${index}`">
+            Descripción de {{ evidence.file.name }}
+          </label>
+          <input
+            :id="`${descriptionId}-${index}`"
+            :value="evidence.description"
+            type="text"
+            placeholder="Describe esta evidencia..."
+            class="w-full rounded border border-white/10 bg-liminal-surface px-3 py-2 font-mono text-xs text-neutral-200 placeholder-white/30 transition-colors focus:border-liminal-primary focus:ring-1 focus:ring-liminal-primary focus:outline-none"
+            @input="setDescription(index, ($event.target as HTMLInputElement).value)"
+          />
         </li>
       </ul>
     </div>
