@@ -2,7 +2,9 @@
 import { computed, shallowRef } from 'vue'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import LevelShowcase from './components/headerSection/LevelShowcase.vue'
+import FeaturedReportsSection from './components/featureSection/FeaturedReportsSection.vue'
 import { niveles } from './data/niveles.mock'
+import { featuredReports } from './data/reports.mock'
 
 const firstLevel = niveles[0]
 if (!firstLevel) {
@@ -40,26 +42,44 @@ function goPrev() {
 function goNext() {
   goToOffset(1)
 }
+
+function selectReport(id: number) {
+  // TODO: navegar al detalle del reporte cuando exista la ruta correspondiente.
+  console.info('Reporte seleccionado', id)
+}
+
+function exploreMoreLevels() {
+  // TODO: navegar al listado completo de niveles cuando exista la ruta correspondiente.
+  console.info('Explorar más niveles')
+}
 </script>
 
 <template>
-  <section
-    class="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-liminal-bg bg-cover bg-center bg-no-repeat"
-    :style="heroStyle"
-  >
-    <NavBar
-      class="relative z-20"
-      avatar-url="https://lh3.googleusercontent.com/aida/AEtjO1VVzPpXRNlzf5_kX_3AWQniosuAeX2fXZgx-UJsvSr0UKWMaWrWkU2edQwnX4_KMBh3dmFmwwDuySnz0TFUeuYBLzeNjkHjVSDMmfQ3T3xkPihqJxJVWLsb-MYnD0Dkg7npmvQx9iTVK01t_Hru4csrCPLzNo10xPU-acGS6cRTU3eEXIFYxKXvbkdYZb5H8M0hU1VZ-9PTyF1BIlwbk4SVDTpJJR3HNBQZjQL5q8ysyBHsnYIjveVRwQ"
-    />
-
-    <main class="relative z-10 flex flex-1 flex-col justify-end px-5 pb-5 md:px-12 md:pb-10">
-      <LevelShowcase
-        :niveles="niveles"
-        :active-level="activeLevel"
-        @select="selectLevel"
-        @prev="goPrev"
-        @next="goNext"
+  <div class="w-full bg-liminal-bg">
+    <section
+      class="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-liminal-bg bg-cover bg-center bg-no-repeat"
+      :style="heroStyle"
+    >
+      <NavBar
+        class="relative z-20"
+        avatar-url="https://lh3.googleusercontent.com/aida/AEtjO1VVzPpXRNlzf5_kX_3AWQniosuAeX2fXZgx-UJsvSr0UKWMaWrWkU2edQwnX4_KMBh3dmFmwwDuySnz0TFUeuYBLzeNjkHjVSDMmfQ3T3xkPihqJxJVWLsb-MYnD0Dkg7npmvQx9iTVK01t_Hru4csrCPLzNo10xPU-acGS6cRTU3eEXIFYxKXvbkdYZb5H8M0hU1VZ-9PTyF1BIlwbk4SVDTpJJR3HNBQZjQL5q8ysyBHsnYIjveVRwQ"
       />
-    </main>
-  </section>
+
+      <main class="relative z-10 flex flex-1 flex-col justify-end px-5 pb-5 md:px-12 md:pb-10">
+        <LevelShowcase
+          :niveles="niveles"
+          :active-level="activeLevel"
+          @select="selectLevel"
+          @prev="goPrev"
+          @next="goNext"
+        />
+      </main>
+    </section>
+
+    <FeaturedReportsSection
+      :reports="featuredReports"
+      @select="selectReport"
+      @explore-more="exploreMoreLevels"
+    />
+  </div>
 </template>
