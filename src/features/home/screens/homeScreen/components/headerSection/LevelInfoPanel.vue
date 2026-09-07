@@ -84,21 +84,6 @@ const materiales = computed(() => props.nivel.materiales.join(' · '))
         </svg>
         <span>Explorar nivel</span>
       </button>
-
-      <button
-        type="button"
-        class="flex items-center justify-center gap-3 rounded-[3px] border border-white/25 bg-black/40 px-6 py-3.5 text-xs font-medium tracking-wider text-white uppercase outline-none transition-all duration-150 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary md:text-sm"
-        @click="emit('viewMap', nivel.id)"
-      >
-        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path
-            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-        <span>Ver mapa</span>
-      </button>
     </div>
   </div>
 </template>

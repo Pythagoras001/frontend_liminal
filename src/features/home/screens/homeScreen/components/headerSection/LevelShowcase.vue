@@ -32,7 +32,7 @@ const emit = defineEmits<{
       <CarouselNavButtons size="lg" @prev="emit('prev')" @next="emit('next')" />
     </div>
 
-    <div class="ml-auto w-full lg:w-1/2 lg:flex-none">
+    <div class="flex w-full min-w-0 justify-end lg:ml-auto lg:w-auto lg:flex-none">
       <LevelCarousel
         :niveles="niveles"
         :active-id="activeLevel.id"
