@@ -14,6 +14,12 @@ const router = createRouter({
       component: () =>
         import('@/features/login/screens/loginResgisterScreen/LoginRegisterScreen.vue'),
     },
+    {
+      path: '/class',
+      name: 'class',
+      component: () =>
+        import('@/features/levelClass/screens/levelClassScreen/LevelClassScreen.vue'),
+    },
   ],
 })
 
