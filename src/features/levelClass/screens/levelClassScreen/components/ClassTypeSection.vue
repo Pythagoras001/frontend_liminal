@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, shallowRef } from 'vue'
 import type { LevelClass } from '@/features/levelClass/model/LevelClass'
 import ClassTypeRow from './ClassTypeRow.vue'
 
@@ -14,7 +14,7 @@ const emit = defineEmits<{
   learnMore: []
 }>()
 
-const selectedId = ref<number | null>(null)
+const selectedId = shallowRef<number | null>(null)
 
 /** Sin selección explícita queda marcado el primer tipo, como en el diseño. */
 const activeId = computed(() => selectedId.value ?? props.classes[0]?.id ?? null)

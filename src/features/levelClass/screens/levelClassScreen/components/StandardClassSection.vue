@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, shallowRef } from 'vue'
 import type { LevelClass } from '@/features/levelClass/model/LevelClass'
 import StandardClassCard from './StandardClassCard.vue'
 import StandardClassRow from './StandardClassRow.vue'
@@ -15,9 +15,24 @@ const emit = defineEmits<{
   viewLevels: [id: number]
 }>()
 
-/** La primera clase de la escala se muestra destacada; el resto como lista compacta. */
-const featuredClass = computed(() => props.classes[0])
-const compactClasses = computed(() => props.classes.slice(1))
+const expandedId = shallowRef<number | null>(null)
+
+/** Sin expansión explícita queda desplegada la primera clase, como en el diseño. */
+const activeId = computed(() => expandedId.value ?? props.classes[0]?.id ?? null)
+
+/**
+ * Solo se devuelve el foco al encabezado cuando la expansión viene de un clic;
+ * en el primer render el foco debe quedarse donde está.
+ */
+const hasUserExpanded = shallowRef(false)
+
+function expandClass(id: number) {
+  if (id === activeId.value) return
+
+  expandedId.value = id
+  hasUserExpanded.value = true
+  emit('select', id)
+}
 </script>
 
 <template>
@@ -32,19 +47,21 @@ const compactClasses = computed(() => props.classes.slice(1))
       <span class="font-mono text-[10px] text-neutral-600 uppercase">Sector: 0-5</span>
     </div>
 
-    <StandardClassCard
-      v-if="featuredClass"
-      :level-class="featuredClass"
-      @view-levels="emit('viewLevels', $event)"
-    />
-
     <div class="flex flex-col divide-y divide-white/10 border-t border-b border-white/10">
-      <StandardClassRow
-        v-for="levelClass in compactClasses"
+      <Transition
+        v-for="levelClass in classes"
         :key="levelClass.id"
-        :level-class="levelClass"
-        @select="emit('select', $event)"
-      />
+        enter-active-class="transition-[opacity,transform] duration-200 ease-out"
+        enter-from-class="-translate-y-1.5 opacity-0"
+      >
+        <StandardClassCard
+          v-if="levelClass.id === activeId"
+          :level-class="levelClass"
+          :autofocus-header="hasUserExpanded"
+          @view-levels="emit('viewLevels', $event)"
+        />
+        <StandardClassRow v-else :level-class="levelClass" @expand="expandClass" />
+      </Transition>
     </div>
   </section>
 </template>

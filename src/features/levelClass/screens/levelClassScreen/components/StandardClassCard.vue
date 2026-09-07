@@ -1,18 +1,36 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, useId, useTemplateRef } from 'vue'
 import type { LevelClass } from '@/features/levelClass/model/LevelClass'
 import ClassHexBadge from './ClassHexBadge.vue'
 import { getSurvivalClassAccent } from './survivalClassAccent'
 
 interface Props {
   levelClass: LevelClass
+  /**
+   * Mueve el foco al encabezado al montarse. La fila que el usuario pulsó deja
+   * de existir al expandirse, así que sin esto el foco se perdería.
+   */
+  autofocusHeader?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  autofocusHeader: false,
+})
 
 const emit = defineEmits<{
   viewLevels: [id: number]
 }>()
+
+const headerId = useId()
+const panelId = useId()
+
+const headerButton = useTemplateRef<HTMLButtonElement>('headerButton')
+
+onMounted(() => {
+  if (props.autofocusHeader) {
+    headerButton.value?.focus()
+  }
+})
 
 const accent = computed(() => getSurvivalClassAccent(props.levelClass.classNumber).accent)
 
@@ -25,9 +43,7 @@ const statusTags = computed(() => [
 </script>
 
 <template>
-  <article
-    class="relative mb-4 flex flex-col overflow-hidden border border-white/10 bg-liminal-surface shadow-2xl md:flex-row"
-  >
+  <article class="relative flex flex-col overflow-hidden bg-liminal-surface shadow-2xl md:flex-row">
     <span
       aria-hidden="true"
       class="absolute top-0 bottom-0 left-0 w-1 bg-current shadow-[0_0_12px_currentColor]"
@@ -43,61 +59,75 @@ const statusTags = computed(() => [
               Dificultad de supervivencia
             </span>
             <h3 class="text-3xl font-bold tracking-wide text-white uppercase sm:text-4xl">
-              {{ levelClass.classNumber }}
+              <button
+                :id="headerId"
+                ref="headerButton"
+                type="button"
+                class="rounded text-left outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-liminal-primary"
+                :aria-expanded="true"
+                :aria-controls="panelId"
+                aria-disabled="true"
+              >
+                {{ levelClass.classNumber }}
+              </button>
             </h3>
           </div>
         </div>
 
-        <ul
-          class="flex flex-wrap items-center gap-x-3 gap-y-2 py-2 font-mono text-[11px]"
-          :class="accent"
-        >
-          <li
-            v-for="(tag, index) in statusTags"
-            :key="tag"
-            class="inline-flex items-center gap-1.5"
+        <div :id="panelId" role="region" :aria-labelledby="headerId">
+          <ul
+            class="flex flex-wrap items-center gap-x-3 gap-y-2 py-2 font-mono text-[11px]"
+            :class="accent"
           >
-            <svg
-              aria-hidden="true"
-              class="h-3.5 w-3.5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
+            <li
+              v-for="(tag, index) in statusTags"
+              :key="tag"
+              class="inline-flex items-center gap-1.5"
             >
-              <path
-                v-if="index === 0"
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <template v-else-if="index === 1">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" />
-              </template>
-              <template v-else>
-                <circle cx="12" cy="12" r="10" />
-                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
-              </template>
-            </svg>
-            <span class="tracking-wide uppercase">{{ tag }}</span>
-          </li>
-        </ul>
+              <svg
+                aria-hidden="true"
+                class="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  v-if="index === 0"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <template v-else-if="index === 1">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" />
+                </template>
+                <template v-else>
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+                </template>
+              </svg>
+              <span class="tracking-wide uppercase">{{ tag }}</span>
+            </li>
+          </ul>
 
-        <p class="mt-2.5 max-w-sm text-xs leading-relaxed text-neutral-400">
-          {{ levelClass.description }}
-        </p>
-      </div>
+          <p class="mt-2.5 max-w-sm text-xs leading-relaxed text-neutral-400">
+            {{ levelClass.description }}
+          </p>
 
-      <div class="mt-6 pt-1">
-        <button
-          type="button"
-          class="group inline-flex items-center gap-1.5 rounded font-mono text-xs font-bold tracking-[0.15em] text-liminal-primary uppercase outline-none transition-colors hover:text-liminal-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
-          @click="emit('viewLevels', levelClass.id)"
-        >
-          <span>Ver niveles</span>
-          <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
-        </button>
+          <div class="mt-6 pt-1">
+            <button
+              type="button"
+              class="group inline-flex items-center gap-1.5 rounded font-mono text-xs font-bold tracking-[0.15em] text-liminal-primary uppercase outline-none transition-colors hover:text-liminal-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
+              @click="emit('viewLevels', levelClass.id)"
+            >
+              <span>Ver niveles</span>
+              <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
