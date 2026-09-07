@@ -8,11 +8,14 @@ interface Props {
   pending?: boolean
   /** Mensaje de error del servidor; se muestra encima del botón. */
   errorMessage?: string
+  /** Aviso informativo, ej. tras crear la cuenta correctamente. */
+  notice?: string
 }
 
 withDefaults(defineProps<Props>(), {
   pending: false,
   errorMessage: undefined,
+  notice: undefined,
 })
 
 const emit = defineEmits<{
@@ -56,6 +59,14 @@ function handleSubmit() {
       label="Contraseña"
       autocomplete="current-password"
     />
+
+    <p
+      v-if="notice"
+      role="status"
+      class="border border-liminal-primary/40 bg-liminal-primary/10 px-3 py-2 text-xs text-liminal-primary"
+    >
+      {{ notice }}
+    </p>
 
     <p
       v-if="errorMessage"

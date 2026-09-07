@@ -1,19 +1,29 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { isAxiosError } from 'axios'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
 import AuthCard from './components/AuthCard.vue'
 import { useLogin } from '@/features/login/hooks/useLogin'
-import type { LoginCredentials, RegisterCredentials } from '@/features/login/model/AuthCredentials'
+import { useRegister } from '@/features/login/hooks/useRegister'
+import type {
+  AuthTab,
+  LoginCredentials,
+  RegisterCredentials,
+} from '@/features/login/model/AuthCredentials'
 
 const backgroundUrl =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuDcw4zihPRSt9KuR0KzOfb-EmEBiRbAllWclh3Ta6ba2fH679pDdP08xvO33Wkfbb6bfwlvfhmjNq36HWf6AXb7xG_GcluLQzMAo56wMC0Cc-5YdeJoal9hvYRs1sl2phBf07uonkZwOE-GtiqSJkjao82D2ZR-avkOeZH7zYMwheiDzdTBNZydkGoDdmnkBSHdE40VESW4LeyZC7ImRQvNWedF4Z6-d8Hk06If561YjbkOjtiBbiWa'
 
 const router = useRouter()
 
+const activeTab = ref<AuthTab>('login')
+/** Aviso mostrado en la pestaña de acceso tras crear la cuenta. */
+const loginNotice = ref<string>()
+
 const { mutate: login, isPending, error } = useLogin()
+const { mutate: register, isPending: isRegisterPending, error: registerError } = useRegister()
 
 /** Traduce el fallo de la petición a un mensaje que el explorador entienda. */
 const loginError = computed(() => {
@@ -27,14 +37,39 @@ const loginError = computed(() => {
 })
 
 function handleLogin(credentials: LoginCredentials) {
+  // Al intentar entrar, el aviso de "cuenta creada" ya cumplió su función: se
+  // retira para que un fallo de acceso no aparezca junto a un mensaje de éxito.
+  loginNotice.value = undefined
+
   login(credentials, {
     onSuccess: () => router.push({ name: 'home' }),
   })
 }
 
+/** El registro no abre sesión: se devuelve al explorador a la pestaña de acceso. */
+const registerErrorMessage = computed(() => {
+  if (!registerError.value) {
+    return undefined
+  }
+  if (isAxiosError(registerError.value)) {
+    const status = registerError.value.response?.status
+    if (status === 409) {
+      return 'Ese correo o nombre de explorador ya está registrado.'
+    }
+    if (status === 400 || status === 422) {
+      return 'Revisa los datos: el servidor los ha rechazado.'
+    }
+  }
+  return 'No se pudo crear la cuenta. Inténtalo de nuevo.'
+})
+
 function handleRegister(credentials: RegisterCredentials) {
-  // TODO: conectar con el servicio de registro cuando exista.
-  console.info('Registrarse', credentials)
+  register(credentials, {
+    onSuccess: () => {
+      activeTab.value = 'login'
+      loginNotice.value = 'Cuenta creada. Inicia sesión para entrar al archivo.'
+    },
+  })
 }
 
 function handleForgotPassword() {
@@ -59,8 +94,12 @@ function handleForgotPassword() {
 
     <main class="relative z-10 flex flex-1 items-center justify-center px-4 py-8">
       <AuthCard
+        v-model:tab="activeTab"
         :login-pending="isPending"
         :login-error="loginError"
+        :login-notice="loginNotice"
+        :register-pending="isRegisterPending"
+        :register-error="registerErrorMessage"
         @login="handleLogin"
         @register="handleRegister"
         @forgot-password="handleForgotPassword"

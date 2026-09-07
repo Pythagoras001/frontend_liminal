@@ -15,3 +15,14 @@ export interface AuthUser {
 export interface LoginResponse {
   access_token: string
 }
+
+/**
+ * Cuerpo de `POST /user/`. El formulario recoge más campos de los que viajan:
+ * `confirmPassword` solo sirve para validar en el cliente y `explorerName` se
+ * envía como `userName`, que es el nombre que espera el backend.
+ */
+export interface RegisterPayload {
+  userName: string
+  email: string
+  password: string
+}

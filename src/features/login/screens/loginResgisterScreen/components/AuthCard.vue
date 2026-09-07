@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { LoginCredentials, RegisterCredentials } from '@/features/login/model/AuthCredentials'
+import type {
+  AuthTab,
+  LoginCredentials,
+  RegisterCredentials,
+} from '@/features/login/model/AuthCredentials'
 import AuthTabs from './AuthTabs.vue'
 import LoginForm from './LoginForm.vue'
 import RegisterForm from './RegisterForm.vue'
@@ -9,11 +12,19 @@ interface Props {
   /** Estado de la petición de inicio de sesión, propagado a `LoginForm`. */
   loginPending?: boolean
   loginError?: string
+  /** Aviso mostrado en la pestaña de acceso, ej. tras crear la cuenta. */
+  loginNotice?: string
+  /** Estado de la petición de registro, propagado a `RegisterForm`. */
+  registerPending?: boolean
+  registerError?: string
 }
 
 withDefaults(defineProps<Props>(), {
   loginPending: false,
   loginError: undefined,
+  loginNotice: undefined,
+  registerPending: false,
+  registerError: undefined,
 })
 
 const emit = defineEmits<{
@@ -22,9 +33,13 @@ const emit = defineEmits<{
   forgotPassword: []
 }>()
 
-const activeTab = ref<'login' | 'register'>('login')
+/**
+ * La pestaña activa es un `v-model` para que la pantalla pueda devolver al
+ * explorador al acceso cuando termina el registro.
+ */
+const activeTab = defineModel<AuthTab>('tab', { default: 'login' })
 
-function switchTo(tab: 'login' | 'register') {
+function switchTo(tab: AuthTab) {
   activeTab.value = tab
 }
 </script>
@@ -53,10 +68,16 @@ function switchTo(tab: 'login' | 'register') {
         v-if="activeTab === 'login'"
         :pending="loginPending"
         :error-message="loginError"
+        :notice="loginNotice"
         @submit="emit('login', $event)"
         @forgot-password="emit('forgotPassword')"
       />
-      <RegisterForm v-else @submit="emit('register', $event)" />
+      <RegisterForm
+        v-else
+        :pending="registerPending"
+        :error-message="registerError"
+        @submit="emit('register', $event)"
+      />
     </div>
 
     <div class="mt-6 text-center text-xs text-neutral-400">

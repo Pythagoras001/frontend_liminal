@@ -1,12 +1,20 @@
 import { ApiClient } from '@/services/ApiClient'
 import type { LoginCredentials } from '@/features/login/model/AuthCredentials'
-import type { AuthUser, LoginResponse } from '@/features/login/model/AuthUser'
+import type { AuthUser, LoginResponse, RegisterPayload } from '@/features/login/model/AuthUser'
 
 export const AuthApi = {
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
     const { data } = await ApiClient.post<LoginResponse>('/auth/login', credentials)
 
     return data
+  },
+
+  /**
+   * Crea la cuenta. No inicia sesión: el explorador debe autenticarse después,
+   * así que la respuesta no se consume.
+   */
+  async register(payload: RegisterPayload): Promise<void> {
+    await ApiClient.post('/user/', payload)
   },
 
   /**
