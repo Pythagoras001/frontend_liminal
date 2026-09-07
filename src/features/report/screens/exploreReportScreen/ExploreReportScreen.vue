@@ -8,7 +8,7 @@ import { exploreReportsPage } from './data/exploreReports.mock'
 import ReportArchiveHeader from './components/ReportArchiveHeader.vue'
 import ReportToolbar from './components/ReportToolbar.vue'
 import ReportGrid from './components/ReportGrid.vue'
-import ReportPagination from './components/ReportPagination.vue'
+import ReportPagination from '@/features/report/components/ReportPagination.vue'
 
 /** Enlaza la barra de búsqueda con la rejilla mediante `aria-controls`. */
 const REPORT_LIST_ID = 'reportes-listado'

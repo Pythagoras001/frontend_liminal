@@ -2,12 +2,21 @@
 import { computed } from 'vue'
 import type { Report } from '@/features/report/model/Report'
 import { getAuthorInitials } from './authorInitials'
+import { formatArchiveDate } from '@/features/shared/utils/formatArchiveDate'
 
 interface Props {
   report: Report
+  /**
+   * Qué se muestra en el pie de la tarjeta junto a las valoraciones. En un
+   * archivo colectivo interesa quién lo documentó; en el archivo personal de un
+   * explorador el autor es siempre el mismo, así que se muestra la fecha.
+   */
+  footer?: 'author' | 'date'
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  footer: 'author',
+})
 
 const emit = defineEmits<{
   select: [id: number]
@@ -15,6 +24,8 @@ const emit = defineEmits<{
 }>()
 
 const initials = computed(() => getAuthorInitials(props.report.author))
+
+const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
 
 const imageAlt = computed(() => `${props.report.description} — Nivel ${props.report.nivel}`)
 </script>
@@ -59,7 +70,15 @@ const imageAlt = computed(() => `${props.report.description} — Nivel ${props.r
     </button>
 
     <div class="mx-4 flex items-center justify-between border-t border-white/10 py-3 sm:mx-5">
-      <div class="flex items-center gap-2">
+      <time
+        v-if="footer === 'date'"
+        :datetime="report.createdAt"
+        class="font-mono text-xs text-white/55"
+      >
+        {{ publishedAt }}
+      </time>
+
+      <div v-else class="flex items-center gap-2">
         <span
           class="flex h-5 w-5 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5"
         >

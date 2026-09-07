@@ -29,6 +29,11 @@ const router = createRouter({
         import('@/features/report/screens/reportDetailScreen/ReportDetailScreen.vue'),
     },
     {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('@/features/profile/screens/profileScreen/ProfileScreen.vue'),
+    },
+    {
       path: '/class',
       name: 'class',
       component: () =>

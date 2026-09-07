@@ -72,7 +72,12 @@ const emit = defineEmits<{
     </nav>
 
     <div class="flex items-center gap-5 md:gap-6">
-      <div v-if="hasSession" class="flex items-center gap-3">
+      <RouterLink
+        v-if="hasSession"
+        :to="{ name: 'profile' }"
+        class="flex items-center gap-3 rounded outline-none transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
+        :aria-label="`Ver el perfil de ${displayName}`"
+      >
         <div
           class="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-neutral-800 md:h-9 md:w-9"
         >
@@ -103,7 +108,7 @@ const emit = defineEmits<{
         <span class="hidden text-xs font-medium tracking-wide text-white/90 md:inline md:text-sm">
           {{ displayName }}
         </span>
-      </div>
+      </RouterLink>
 
       <RouterLink
         v-else
