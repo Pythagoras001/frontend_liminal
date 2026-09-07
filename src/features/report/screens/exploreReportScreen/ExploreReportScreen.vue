@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
+import { useRouter } from 'vue-router'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
 import { useReportArchiveFilters } from '@/features/report/hooks/useReportArchiveFilters'
@@ -11,6 +12,8 @@ import ReportPagination from './components/ReportPagination.vue'
 
 /** Enlaza la barra de búsqueda con la rejilla mediante `aria-controls`. */
 const REPORT_LIST_ID = 'reportes-listado'
+
+const router = useRouter()
 
 // TODO: sustituir el mock por `useReport(page)` cuando el endpoint esté disponible.
 const archive = shallowRef(exploreReportsPage)
@@ -37,8 +40,7 @@ function openFilters() {
 }
 
 function selectReport(id: number) {
-  // TODO: navegar al detalle del reporte cuando exista la ruta correspondiente.
-  console.info('Reporte seleccionado', id)
+  router.push({ name: 'report-detail', params: { id } })
 }
 
 function likeReport(id: number) {

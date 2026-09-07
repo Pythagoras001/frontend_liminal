@@ -21,6 +21,14 @@ const router = createRouter({
         import('@/features/report/screens/exploreReportScreen/ExploreReportScreen.vue'),
     },
     {
+      // `props: true` pasa el `:id` de la URL como prop de la pantalla.
+      path: '/reports/:id',
+      name: 'report-detail',
+      props: true,
+      component: () =>
+        import('@/features/report/screens/reportDetailScreen/ReportDetailScreen.vue'),
+    },
+    {
       path: '/class',
       name: 'class',
       component: () =>

@@ -6,6 +6,11 @@ export interface Report {
   id: number
   nivel: string
   description: string
+  /**
+   * Relato del hallazgo que se muestra en el detalle del reporte, un párrafo
+   * por entrada. Opcional: los listados solo necesitan `description`.
+   */
+  findingLog?: string[]
   createdAt: string
   likesCount: number
   principalEvidence: Evidence

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Report } from '@/features/report/model/Report'
-import ReportCard from './ReportCard.vue'
+import ReportCard from '@/features/report/components/ReportCard.vue'
 
 interface Props {
   reports: Report[]
