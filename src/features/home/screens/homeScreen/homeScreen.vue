@@ -88,10 +88,7 @@ function openTerminal() {
       class="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-liminal-bg bg-cover bg-center bg-no-repeat"
       :style="heroStyle"
     >
-      <NavBar
-        class="relative z-20"
-        avatar-url="https://lh3.googleusercontent.com/aida/AEtjO1VVzPpXRNlzf5_kX_3AWQniosuAeX2fXZgx-UJsvSr0UKWMaWrWkU2edQwnX4_KMBh3dmFmwwDuySnz0TFUeuYBLzeNjkHjVSDMmfQ3T3xkPihqJxJVWLsb-MYnD0Dkg7npmvQx9iTVK01t_Hru4csrCPLzNo10xPU-acGS6cRTU3eEXIFYxKXvbkdYZb5H8M0hU1VZ-9PTyF1BIlwbk4SVDTpJJR3HNBQZjQL5q8ysyBHsnYIjveVRwQ"
-      />
+      <NavBar class="relative z-20" />
 
       <main class="relative z-10 flex flex-1 flex-col justify-end px-5 pb-5 md:px-12 md:pb-10">
         <LevelShowcase

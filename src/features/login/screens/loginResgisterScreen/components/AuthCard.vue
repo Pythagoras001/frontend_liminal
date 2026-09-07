@@ -5,6 +5,17 @@ import AuthTabs from './AuthTabs.vue'
 import LoginForm from './LoginForm.vue'
 import RegisterForm from './RegisterForm.vue'
 
+interface Props {
+  /** Estado de la petición de inicio de sesión, propagado a `LoginForm`. */
+  loginPending?: boolean
+  loginError?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  loginPending: false,
+  loginError: undefined,
+})
+
 const emit = defineEmits<{
   login: [credentials: LoginCredentials]
   register: [credentials: RegisterCredentials]
@@ -40,6 +51,8 @@ function switchTo(tab: 'login' | 'register') {
     >
       <LoginForm
         v-if="activeTab === 'login'"
+        :pending="loginPending"
+        :error-message="loginError"
         @submit="emit('login', $event)"
         @forgot-password="emit('forgotPassword')"
       />

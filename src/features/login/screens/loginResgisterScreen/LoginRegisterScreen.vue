@@ -1,15 +1,35 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { isAxiosError } from 'axios'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
 import AuthCard from './components/AuthCard.vue'
+import { useLogin } from '@/features/login/hooks/useLogin'
 import type { LoginCredentials, RegisterCredentials } from '@/features/login/model/AuthCredentials'
 
 const backgroundUrl =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuDcw4zihPRSt9KuR0KzOfb-EmEBiRbAllWclh3Ta6ba2fH679pDdP08xvO33Wkfbb6bfwlvfhmjNq36HWf6AXb7xG_GcluLQzMAo56wMC0Cc-5YdeJoal9hvYRs1sl2phBf07uonkZwOE-GtiqSJkjao82D2ZR-avkOeZH7zYMwheiDzdTBNZydkGoDdmnkBSHdE40VESW4LeyZC7ImRQvNWedF4Z6-d8Hk06If561YjbkOjtiBbiWa'
 
+const router = useRouter()
+
+const { mutate: login, isPending, error } = useLogin()
+
+/** Traduce el fallo de la petición a un mensaje que el explorador entienda. */
+const loginError = computed(() => {
+  if (!error.value) {
+    return undefined
+  }
+  if (isAxiosError(error.value) && error.value.response?.status === 401) {
+    return 'Credenciales incorrectas. Revisa el correo y la contraseña.'
+  }
+  return 'No se pudo conectar con el archivo. Inténtalo de nuevo.'
+})
+
 function handleLogin(credentials: LoginCredentials) {
-  // TODO: conectar con el servicio de autenticación cuando exista.
-  console.info('Iniciar sesión', credentials)
+  login(credentials, {
+    onSuccess: () => router.push({ name: 'home' }),
+  })
 }
 
 function handleRegister(credentials: RegisterCredentials) {
@@ -39,6 +59,8 @@ function handleForgotPassword() {
 
     <main class="relative z-10 flex flex-1 items-center justify-center px-4 py-8">
       <AuthCard
+        :login-pending="isPending"
+        :login-error="loginError"
         @login="handleLogin"
         @register="handleRegister"
         @forgot-password="handleForgotPassword"

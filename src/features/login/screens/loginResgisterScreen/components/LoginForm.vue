@@ -3,6 +3,18 @@ import { reactive } from 'vue'
 import type { LoginCredentials } from '@/features/login/model/AuthCredentials'
 import PasswordInput from './PasswordInput.vue'
 
+interface Props {
+  /** Deshabilita el envío mientras la peticion de login está en curso. */
+  pending?: boolean
+  /** Mensaje de error del servidor; se muestra encima del botón. */
+  errorMessage?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  pending: false,
+  errorMessage: undefined,
+})
+
 const emit = defineEmits<{
   submit: [credentials: LoginCredentials]
   forgotPassword: []
@@ -56,13 +68,23 @@ function handleSubmit() {
       </button>
     </div>
 
+    <p
+      v-if="errorMessage"
+      role="alert"
+      class="border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-300"
+    >
+      {{ errorMessage }}
+    </p>
+
     <div class="pt-2">
       <button
         type="submit"
-        class="flex w-full items-center justify-center space-x-2 bg-liminal-primary px-4 py-3 text-sm font-bold tracking-widest text-liminal-on-primary uppercase transition-all duration-150 hover:bg-liminal-primary-hover active:scale-[0.99]"
+        :disabled="pending"
+        class="flex w-full items-center justify-center space-x-2 bg-liminal-primary px-4 py-3 text-sm font-bold tracking-widest text-liminal-on-primary uppercase transition-all duration-150 hover:bg-liminal-primary-hover active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-liminal-primary"
       >
-        <span>Entrar</span>
+        <span>{{ pending ? 'Entrando…' : 'Entrar' }}</span>
         <svg
+          v-if="!pending"
           class="ml-1 h-4 w-4 stroke-[2.5]"
           fill="none"
           stroke="currentColor"

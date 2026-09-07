@@ -1,21 +1,37 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import NavItem from './NavItem.vue'
+import { useCurrentUser } from '@/features/login/hooks/useCurrentUser'
 
 interface Props {
   filterLabel?: string
   sector?: string
   terminal?: string
+  /** Sobrescribe el nombre de la sesión; útil para maquetar sin backend. */
   explorerName?: string
+  /** Sobrescribe el avatar de la sesión; útil para maquetar sin backend. */
   avatarUrl?: string
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   filterLabel: 'Todos los niveles',
   sector: 'Sector Alpha',
   terminal: 'Terminal 09',
-  explorerName: 'Explorador',
+  explorerName: undefined,
   avatarUrl: undefined,
 })
+
+// La petición del perfil se dispara sola en cuanto hay sesión; aquí solo se
+// consume el resultado.
+const { data: currentUser } = useCurrentUser()
+
+const displayName = computed(
+  () => props.explorerName ?? currentUser.value?.userName ?? 'Explorador',
+)
+
+const displayAvatar = computed(
+  () => props.avatarUrl ?? currentUser.value?.profileImage?.thumbnailUrl,
+)
 
 const emit = defineEmits<{
   filterClick: []
@@ -47,14 +63,14 @@ const emit = defineEmits<{
           class="h-8 w-8 flex-shrink-0 overflow-hidden rounded-full border border-white/30 bg-neutral-800 md:h-9 md:w-9"
         >
           <img
-            v-if="avatarUrl"
-            :src="avatarUrl"
+            v-if="displayAvatar"
+            :src="displayAvatar"
             alt=""
             class="h-full w-full object-cover grayscale contrast-125"
           />
         </div>
         <span class="hidden text-xs font-medium tracking-wide text-white/90 md:inline md:text-sm">
-          {{ explorerName }}
+          {{ displayName }}
         </span>
       </div>
 
