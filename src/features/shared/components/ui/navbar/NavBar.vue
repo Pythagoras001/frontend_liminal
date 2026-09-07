@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import NavItem from './NavItem.vue'
 import { useCurrentUser } from '@/features/login/hooks/useCurrentUser'
+import { useAuthStore } from '@/features/login/stores/useAuthStore'
 
 interface Props {
   filterLabel?: string
@@ -21,9 +23,21 @@ const props = withDefaults(defineProps<Props>(), {
   avatarUrl: undefined,
 })
 
+const { isAuthenticated } = storeToRefs(useAuthStore())
+
 // La petición del perfil se dispara sola en cuanto hay sesión; aquí solo se
 // consume el resultado.
 const { data: currentUser } = useCurrentUser()
+
+/**
+ * Se decide por el token, no por el perfil ya cargado: así al recargar la
+ * página no parpadea el botón "Ingresar" mientras `/user/me` está en vuelo. Si
+ * el token resulta inválido, el interceptor lo borra ante el 401 y esto vuelve
+ * a `false` por su cuenta.
+ */
+const hasSession = computed(
+  () => isAuthenticated.value || !!props.explorerName || !!props.avatarUrl,
+)
 
 const displayName = computed(
   () => props.explorerName ?? currentUser.value?.userName ?? 'Explorador',
@@ -58,9 +72,9 @@ const emit = defineEmits<{
     </nav>
 
     <div class="flex items-center gap-5 md:gap-6">
-      <div class="flex items-center gap-3">
+      <div v-if="hasSession" class="flex items-center gap-3">
         <div
-          class="h-8 w-8 flex-shrink-0 overflow-hidden rounded-full border border-white/30 bg-neutral-800 md:h-9 md:w-9"
+          class="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-neutral-800 md:h-9 md:w-9"
         >
           <img
             v-if="displayAvatar"
@@ -68,11 +82,36 @@ const emit = defineEmits<{
             alt=""
             class="h-full w-full object-cover grayscale contrast-125"
           />
+
+          <!-- Silueta por defecto mientras el explorador no tenga fotografía. -->
+          <svg
+            v-else
+            aria-hidden="true"
+            class="h-4 w-4 text-white/55 md:h-[18px] md:w-[18px]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </div>
         <span class="hidden text-xs font-medium tracking-wide text-white/90 md:inline md:text-sm">
           {{ displayName }}
         </span>
       </div>
+
+      <RouterLink
+        v-else
+        :to="{ name: 'login-register' }"
+        class="rounded border border-liminal-primary px-3.5 py-1.5 font-mono text-[11px] font-semibold tracking-[0.12em] text-liminal-primary uppercase outline-none transition-colors hover:bg-liminal-primary hover:text-liminal-on-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary md:text-xs"
+      >
+        Ingresar
+      </RouterLink>
 
       <button
         type="button"

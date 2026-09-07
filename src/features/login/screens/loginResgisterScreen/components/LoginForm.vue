@@ -17,7 +17,6 @@ withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   submit: [credentials: LoginCredentials]
-  forgotPassword: []
 }>()
 
 const form = reactive<LoginCredentials>({
@@ -57,16 +56,6 @@ function handleSubmit() {
       label="Contraseña"
       autocomplete="current-password"
     />
-
-    <div class="flex justify-end pt-0.5">
-      <button
-        type="button"
-        class="rounded text-xs text-liminal-primary outline-none transition-colors hover:text-liminal-primary-hover hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
-        @click="emit('forgotPassword')"
-      >
-        ¿Olvidaste tu contraseña?
-      </button>
-    </div>
 
     <p
       v-if="errorMessage"
