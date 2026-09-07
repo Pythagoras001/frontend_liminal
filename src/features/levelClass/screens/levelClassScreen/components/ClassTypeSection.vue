@@ -23,21 +23,14 @@ const emit = defineEmits<{
     class="relative flex flex-col border-white/10 lg:col-span-5 lg:border-l lg:pl-6"
     aria-labelledby="tipos-clase-titulo"
   >
-    <span
-      aria-hidden="true"
-      class="pointer-events-none absolute top-0 right-0 hidden pr-2 text-right font-mono text-[10px] leading-tight text-neutral-400 opacity-20 select-none lg:block"
-    >
-      MÁS<br />ALLÁ<br />TAMBIÉN<br />EXISTE
-    </span>
-
-    <div class="mb-5 pt-0.5">
+    <div>
       <h2
         id="tipos-clase-titulo"
-        class="text-4xl font-bold tracking-tight text-white uppercase sm:text-5xl"
+        class="mt-2 text-3xl font-bold tracking-tight text-white md:text-4xl"
       >
-        Tipos de clase
+        TIPOS DE CLASES
       </h2>
-      <p class="mt-2 text-xs leading-relaxed text-neutral-400">
+      <p class="mt-2 font-mono text-xs tracking-[0.2em] text-white/50 uppercase md:text-sm">
         Elige un tipo para ver únicamente las clases clasificadas bajo ese criterio.
       </p>
     </div>

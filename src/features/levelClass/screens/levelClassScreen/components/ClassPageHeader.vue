@@ -3,14 +3,18 @@
     <p class="mb-1 font-mono text-[11px] tracking-[0.28em] text-neutral-400 uppercase">
       Sistema de clasificación
     </p>
-    <h1
-      id="clases-supervivencia-titulo"
-      class="text-5xl font-bold tracking-tight text-white uppercase sm:text-6xl md:text-7xl"
-    >
-      Clases de supervivencia
-    </h1>
-    <p class="mt-2 font-mono text-xs tracking-wide text-neutral-400 sm:text-sm">
-      Consulta el nivel de riesgo antes de iniciar una exploración.
-    </p>
+    <div>
+      <h2
+        id="archivos-destacados-titulo"
+        class="mt-2 text-3xl font-bold tracking-tight text-white md:text-4xl"
+      >
+        CLASIFICACIÓN DE SUPERVIVENCIA
+      </h2>
+      <p class="mt-2 font-mono text-xs tracking-[0.2em] text-white/50 uppercase md:text-sm">
+        Conoce el sistema de clasificación de las clases de supervivencia y cómo se organizan
+        según<br />
+        su tipo y sector.
+      </p>
+    </div>
   </header>
 </template>

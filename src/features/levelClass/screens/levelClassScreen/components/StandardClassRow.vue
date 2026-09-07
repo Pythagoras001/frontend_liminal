@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { LevelClass } from '@/features/levelClass/model/LevelClass'
-import ClassHexBadge from './ClassHexBadge.vue'
-import { getSurvivalClassAccent } from './survivalClassAccent'
+import { DEFAULT_ACCENT } from './survivalClassAccent'
 
 interface Props {
   levelClass: LevelClass
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const emit = defineEmits<{
   expand: [id: number]
 }>()
 
-const hoverTitle = computed(() => getSurvivalClassAccent(props.levelClass.classNumber).hoverTitle)
+const hoverTitle = DEFAULT_ACCENT.hoverTitle
 </script>
 
 <template>
@@ -26,7 +24,14 @@ const hoverTitle = computed(() => getSurvivalClassAccent(props.levelClass.classN
       @click="emit('expand', levelClass.id)"
     >
       <span class="flex items-center gap-4">
-        <ClassHexBadge :class-number="levelClass.classNumber" />
+        <img
+          :src="levelClass.iconImage.thumbnailUrl"
+          alt=""
+          aria-hidden="true"
+          width="48"
+          height="48"
+          class="h-12 w-12 flex-shrink-0 object-contain object-center"
+        />
         <span
           class="w-24 text-xl font-bold tracking-wide text-white uppercase transition-colors"
           :class="hoverTitle"

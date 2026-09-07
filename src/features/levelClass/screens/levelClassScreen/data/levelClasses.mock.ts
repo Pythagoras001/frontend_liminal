@@ -47,7 +47,9 @@ export const levelClasses: LevelClass[] = [
     dangerLevel: 'SIN ENTIDADES DAÑINAS',
     description:
       'Niveles completamente seguros, sin entidades hostiles ni peligros ambientales. La exploración y la búsqueda de una salida suelen ser sencillas.',
-    iconImage: pasilloAmarillo,
+    iconImage: imagen(
+      'https://res.cloudinary.com/covylvlk/image/upload/v1788787689/Gemini_Generated_Image_f5u0ojf5u0ojf5u0.png',
+    ),
   },
   {
     id: 2,

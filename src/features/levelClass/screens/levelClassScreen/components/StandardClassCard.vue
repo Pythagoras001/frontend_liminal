@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, useId, useTemplateRef } from 'vue'
 import type { LevelClass } from '@/features/levelClass/model/LevelClass'
-import ClassHexBadge from './ClassHexBadge.vue'
-import { getSurvivalClassAccent } from './survivalClassAccent'
+import { DEFAULT_ACCENT } from './survivalClassAccent'
 
 interface Props {
   levelClass: LevelClass
@@ -32,7 +31,7 @@ onMounted(() => {
   }
 })
 
-const accent = computed(() => getSurvivalClassAccent(props.levelClass.classNumber).accent)
+const accent = DEFAULT_ACCENT.accent
 
 /** Las tres etiquetas de estado que el diseño muestra bajo el título. */
 const statusTags = computed(() => [
@@ -44,16 +43,18 @@ const statusTags = computed(() => [
 
 <template>
   <article class="relative flex flex-col overflow-hidden bg-liminal-surface shadow-2xl md:flex-row">
-    <span
-      aria-hidden="true"
-      class="absolute top-0 bottom-0 left-0 w-1 bg-current shadow-[0_0_12px_currentColor]"
-      :class="accent"
-    />
-
-    <div class="flex flex-1 flex-col justify-between p-6 pl-7 md:p-7 md:pl-8">
+    <div class="flex flex-1 flex-col justify-between p-6 md:p-7">
       <div>
         <div class="mb-4 flex items-center gap-4">
-          <ClassHexBadge :class-number="levelClass.classNumber" size="lg" />
+          <!-- Decorativo: el número ya aparece en el título de la clase. -->
+          <img
+            :src="levelClass.iconImage.thumbnailUrl"
+            alt=""
+            aria-hidden="true"
+            width="48"
+            height="48"
+            class="h-12 w-12 flex-shrink-0 object-contain object-center"
+          />
           <div>
             <span class="block font-mono text-[9px] tracking-[0.2em] text-neutral-400 uppercase">
               Dificultad de supervivencia
