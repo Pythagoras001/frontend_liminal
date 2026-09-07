@@ -42,6 +42,12 @@ export const ReportApi = {
     return data
   },
 
+  async findById(id: number): Promise<Report> {
+    const { data } = await ApiClient.get<Report>(`/report/${id}`)
+
+    return data
+  },
+
   async create(draft: NewReportDraft): Promise<Report> {
     // Sin esta cabecera Axios convertiría el `FormData` a JSON, porque la
     // instancia declara `application/json` por defecto. El navegador la

@@ -62,6 +62,7 @@ const reports: Report[] = [
   {
     id: 9012,
     nivel: '0',
+    title: 'Pasillos amarillos sin salida',
     description: 'Pasillos amarillos sin salida',
     createdAt: '2026-09-06T17:20:00.000Z',
     likesCount: 128,
@@ -84,6 +85,7 @@ const reports: Report[] = [
   {
     id: 9008,
     nivel: '1',
+    title: 'Agua bajo las columnas',
     description: 'Agua bajo las columnas',
     createdAt: '2026-09-02T09:10:00.000Z',
     likesCount: 84,
@@ -106,6 +108,7 @@ const reports: Report[] = [
   {
     id: 8997,
     nivel: '37',
+    title: 'La piscina que no termina',
     description: 'La piscina que no termina',
     createdAt: '2026-08-28T15:45:00.000Z',
     likesCount: 216,
@@ -128,6 +131,7 @@ const reports: Report[] = [
   {
     id: 8955,
     nivel: '4',
+    title: 'La sala de las cuatro puertas',
     description: 'La sala de las cuatro puertas',
     createdAt: '2026-08-21T11:05:00.000Z',
     likesCount: 73,
@@ -150,6 +154,7 @@ const reports: Report[] = [
   {
     id: 8902,
     nivel: '22',
+    title: 'Ecos en el estacionamiento',
     description: 'Ecos en el estacionamiento',
     createdAt: '2026-08-14T20:30:00.000Z',
     likesCount: 51,
@@ -172,6 +177,7 @@ const reports: Report[] = [
   {
     id: 8870,
     nivel: '12',
+    title: 'Taquillas que siguen cerrándose',
     description: 'Taquillas que siguen cerrándose',
     createdAt: '2026-08-05T07:55:00.000Z',
     likesCount: 39,

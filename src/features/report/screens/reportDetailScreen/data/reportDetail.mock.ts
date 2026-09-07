@@ -19,6 +19,7 @@ function imagen(url: string): Image {
 export const reportDetail: Report = {
   id: 9012,
   nivel: '0',
+  title: 'Pasillos amarillos sin salida',
   description: 'Pasillos amarillos sin salida',
   findingLog: [
     'Se encontró una extensa red de habitaciones amarillas iluminadas por luces fluorescentes. No se detectaron entidades hostiles y el lugar parece relativamente seguro.',

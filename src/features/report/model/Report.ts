@@ -5,6 +5,7 @@ import type { Evidence } from './Evidence'
 export interface Report {
   id: number
   nivel: string
+  title: string
   description: string
   /**
    * Relato del hallazgo que se muestra en el detalle del reporte, un párrafo

@@ -40,6 +40,7 @@ const reports: Report[] = [
   {
     id: 9012,
     nivel: '0',
+    title: 'Pasillos sin salida en el sector norte',
     description: 'Pasillos sin salida en el sector norte',
     createdAt: '2026-09-07T08:15:00.000Z',
     likesCount: 128,
@@ -62,6 +63,7 @@ const reports: Report[] = [
   {
     id: 9008,
     nivel: '1',
+    title: 'Agua bajo las columnas',
     description: 'Agua bajo las columnas',
     createdAt: '2026-09-06T21:40:00.000Z',
     likesCount: 84,
@@ -84,6 +86,7 @@ const reports: Report[] = [
   {
     id: 8997,
     nivel: '37',
+    title: 'La piscina que no termina',
     description: 'La piscina que no termina',
     createdAt: '2026-09-06T14:05:00.000Z',
     likesCount: 216,
@@ -106,6 +109,7 @@ const reports: Report[] = [
   {
     id: 8964,
     nivel: '18',
+    title: 'Luces encendidas después del cierre',
     description: 'Luces encendidas después del cierre',
     createdAt: '2026-09-05T23:12:00.000Z',
     likesCount: 67,
@@ -128,6 +132,7 @@ const reports: Report[] = [
   {
     id: 8931,
     nivel: '94',
+    title: 'Casas bajo un cielo inmóvil',
     description: 'Casas bajo un cielo inmóvil',
     createdAt: '2026-09-05T10:30:00.000Z',
     likesCount: 143,
@@ -150,6 +155,7 @@ const reports: Report[] = [
   {
     id: 8902,
     nivel: '22',
+    title: 'Ecos en el estacionamiento',
     description: 'Ecos en el estacionamiento',
     createdAt: '2026-09-04T18:55:00.000Z',
     likesCount: 51,

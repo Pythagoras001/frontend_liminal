@@ -12,6 +12,7 @@ export const communityReports: Report[] = [
   {
     id: 8841,
     nivel: '61',
+    title: 'Supermercado sin final',
     description: 'Supermercado sin final',
     createdAt: '2026-09-06T19:42:00.000Z',
     likesCount: 24,
@@ -58,6 +59,7 @@ export const communityReports: Report[] = [
   {
     id: 5502,
     nivel: '9',
+    title: 'Puerta que no lleva a ningún lugar',
     description: 'Puerta que no lleva a ningún lugar',
     createdAt: '2026-09-06T19:00:00.000Z',
     likesCount: 17,
@@ -104,6 +106,7 @@ export const communityReports: Report[] = [
   {
     id: 3310,
     nivel: '1',
+    title: 'Sótano inundado',
     description: 'Sótano inundado',
     createdAt: '2026-09-06T17:00:00.000Z',
     likesCount: 9,
@@ -150,6 +153,7 @@ export const communityReports: Report[] = [
   {
     id: 7724,
     nivel: '0',
+    title: 'El pasillo se repite',
     description: 'El pasillo se repite',
     createdAt: '2026-09-06T15:00:00.000Z',
     likesCount: 11,
@@ -196,6 +200,7 @@ export const communityReports: Report[] = [
   {
     id: 6193,
     nivel: '188',
+    title: 'Área de juegos',
     description: 'Área de juegos',
     createdAt: '2026-09-06T12:00:00.000Z',
     likesCount: 6,

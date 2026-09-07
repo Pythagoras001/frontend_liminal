@@ -20,13 +20,13 @@ export function createEvidenceDraft(file: File): NewReportEvidenceDraft {
  * replican los que espera el back para que la conversión sea directa.
  */
 export interface NewReportDraft {
-  /** Título del hallazgo; acaba siendo `Report.description`. */
+  /** Título del hallazgo; acaba siendo `Report.title`. */
   title: string
   /** Identificador del nivel explorado, ej. "Nivel 0". */
   nivel: string
   /** Identificador de la clase de supervivencia seleccionada. */
   levelClassId: number | null
-  /** Relato del hallazgo; acaba siendo `Report.findingLog`. */
+  /** Relato del hallazgo; acaba siendo `Report.description`. */
   description: string
   /** Fotografía principal del reporte. */
   principalEvidence: File | null

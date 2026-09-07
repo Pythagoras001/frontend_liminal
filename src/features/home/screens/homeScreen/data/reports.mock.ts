@@ -9,6 +9,8 @@ export const featuredReports: Report[] = [
   {
     id: 37,
     nivel: '37',
+    title:
+      'Complejo de piscinas abandonado con corredores sumergidos y agua estancada de origen desconocido.',
     description:
       'Complejo de piscinas abandonado con corredores sumergidos y agua estancada de origen desconocido.',
     createdAt: '2026-08-12T09:30:00.000Z',
@@ -49,6 +51,8 @@ export const featuredReports: Report[] = [
   {
     id: 18,
     nivel: '18',
+    title:
+      'Escaleras de hormigón entrecruzadas que provocan desorientación y episodios de déjà vu.',
     description:
       'Escaleras de hormigón entrecruzadas que provocan desorientación y episodios de déjà vu.',
     createdAt: '2026-07-28T18:05:00.000Z',
@@ -88,6 +92,8 @@ export const featuredReports: Report[] = [
   {
     id: 4,
     nivel: '4',
+    title:
+      'Piso de oficinas infinito con columnas de hormigón repetidas hasta donde alcanza la vista.',
     description:
       'Piso de oficinas infinito con columnas de hormigón repetidas hasta donde alcanza la vista.',
     createdAt: '2026-06-19T14:45:00.000Z',

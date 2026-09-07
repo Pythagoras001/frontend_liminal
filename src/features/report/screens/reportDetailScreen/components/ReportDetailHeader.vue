@@ -29,7 +29,7 @@ const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
       <h1
         class="text-3xl font-bold tracking-tight text-white uppercase sm:text-4xl md:text-5xl md:leading-none"
       >
-        {{ report.description }}
+        {{ report.title }}
       </h1>
 
       <div
