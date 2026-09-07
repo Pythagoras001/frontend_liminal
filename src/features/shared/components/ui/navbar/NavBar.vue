@@ -21,8 +21,6 @@ const emit = defineEmits<{
   filterClick: []
   searchClick: []
   menuClick: []
-  homeClick: []
-  categoriesClick: []
   registriesClick: []
 }>()
 </script>
@@ -39,8 +37,8 @@ const emit = defineEmits<{
       class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex"
       aria-label="Navegación principal"
     >
-      <NavItem label="Home" @click="emit('homeClick')" />
-      <NavItem label="Categorías" @click="emit('categoriesClick')" />
+      <NavItem label="Home" :to="{ name: 'home' }" />
+      <NavItem label="Categorías" :to="{ name: 'class' }" />
       <NavItem label="Registros" @click="emit('registriesClick')" />
     </nav>
 
