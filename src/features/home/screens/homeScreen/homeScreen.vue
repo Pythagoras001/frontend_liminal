@@ -3,8 +3,10 @@ import { computed, shallowRef } from 'vue'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import LevelShowcase from './components/headerSection/LevelShowcase.vue'
 import FeaturedReportsSection from './components/featureSection/FeaturedReportsSection.vue'
+import CommunityRegisterSection from './components/comunityRegisterSection/CommunityRegisterSection.vue'
 import { niveles } from './data/niveles.mock'
 import { featuredReports } from './data/reports.mock'
+import { communityReports } from './data/communityReports.mock'
 
 const firstLevel = niveles[0]
 if (!firstLevel) {
@@ -52,6 +54,16 @@ function exploreMoreLevels() {
   // TODO: navegar al listado completo de niveles cuando exista la ruta correspondiente.
   console.info('Explorar más niveles')
 }
+
+function publishFinding() {
+  // TODO: navegar al formulario de publicación cuando exista la ruta correspondiente.
+  console.info('Publicar un hallazgo')
+}
+
+function viewAllRegisters() {
+  // TODO: navegar al listado completo de registros cuando exista la ruta correspondiente.
+  console.info('Ver todos los registros')
+}
 </script>
 
 <template>
@@ -80,6 +92,13 @@ function exploreMoreLevels() {
       :reports="featuredReports"
       @select="selectReport"
       @explore-more="exploreMoreLevels"
+    />
+
+    <CommunityRegisterSection
+      :reports="communityReports"
+      @select="selectReport"
+      @publish="publishFinding"
+      @view-all="viewAllRegisters"
     />
   </div>
 </template>
