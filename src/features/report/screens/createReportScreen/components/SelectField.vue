@@ -8,11 +8,14 @@ interface Props {
   options: SelectOption[]
   placeholder?: string
   error?: string
+  /** Bloquea la selección, p. ej. mientras se cargan las opciones. */
+  disabled?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
   placeholder: 'Selecciona una opción',
   error: undefined,
+  disabled: false,
 })
 
 const model = defineModel<string>({ required: true })
@@ -25,7 +28,8 @@ const model = defineModel<string>({ required: true })
         :id="controlId"
         v-model="model"
         required
-        class="w-full appearance-none rounded border border-white/10 bg-liminal-surface px-4 py-3 pr-10 font-mono text-sm text-neutral-100 transition-colors focus:border-liminal-primary focus:ring-1 focus:ring-liminal-primary focus:outline-none"
+        :disabled="disabled"
+        class="w-full appearance-none rounded border border-white/10 bg-liminal-surface px-4 py-3 pr-10 font-mono text-sm text-neutral-100 transition-colors focus:border-liminal-primary focus:ring-1 focus:ring-liminal-primary focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
       >
         <option value="" disabled>{{ placeholder }}</option>
         <option

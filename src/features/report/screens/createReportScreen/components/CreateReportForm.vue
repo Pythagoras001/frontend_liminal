@@ -2,9 +2,8 @@
 import { computed, reactive, shallowRef } from 'vue'
 import type { NewReportDraft } from '@/features/report/model/NewReportDraft'
 import { createEmptyReportDraft } from '@/features/report/model/NewReportDraft'
-import { CLASS_OPTIONS, LEVEL_OPTIONS } from '../data/reportFormOptions'
 import FormField from './FormField.vue'
-import SelectField from './SelectField.vue'
+import LevelClassSelectField from './LevelClassSelectField.vue'
 import EvidenceDropzone from './EvidenceDropzone.vue'
 import EvidencePreview from './EvidencePreview.vue'
 import GallerySection from './GallerySection.vue'
@@ -27,14 +26,18 @@ const emit = defineEmits<{
 }>()
 
 const form = reactive(createEmptyReportDraft())
-/** Los desplegables trabajan con cadenas; la clase se convierte al enviar. */
-const levelClass = shallowRef('')
-/** La validación de la imagen solo se muestra tras un primer intento de envío. */
+/** Las validaciones solo se muestran tras un primer intento de envío. */
 const submitted = shallowRef(false)
 
 const evidenceError = computed(() =>
   submitted.value && !form.principalEvidence
     ? 'Adjunta una fotografía como evidencia principal.'
+    : undefined,
+)
+
+const levelClassError = computed(() =>
+  submitted.value && form.levelClassId === null
+    ? 'Selecciona la clase de supervivencia del nivel.'
     : undefined,
 )
 
@@ -44,15 +47,11 @@ function setPrincipalEvidence(files: File[]) {
 
 function handleSubmit() {
   submitted.value = true
-  if (!form.principalEvidence) {
+  if (!form.principalEvidence || form.levelClassId === null) {
     return
   }
 
-  emit('submit', {
-    ...form,
-    levelClassId: Number(levelClass.value),
-    galeryEvidences: [...form.galeryEvidences],
-  })
+  emit('submit', { ...form, galeryEvidences: [...form.galeryEvidences] })
 }
 </script>
 
@@ -70,20 +69,18 @@ function handleSubmit() {
     </FormField>
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <SelectField
-        v-model="form.nivel"
-        label="Nivel"
-        control-id="reporte-nivel"
-        placeholder="Selecciona un nivel"
-        :options="LEVEL_OPTIONS"
-      />
-      <SelectField
-        v-model="levelClass"
-        label="Clase"
-        control-id="reporte-clase"
-        placeholder="Selecciona una clase"
-        :options="CLASS_OPTIONS"
-      />
+      <FormField label="Nivel" control-id="reporte-nivel">
+        <input
+          id="reporte-nivel"
+          v-model="form.nivel"
+          type="text"
+          required
+          placeholder="Nivel 0"
+          class="w-full rounded border border-white/10 bg-liminal-surface px-4 py-3 font-mono text-sm text-neutral-100 placeholder-white/30 transition-colors focus:border-liminal-primary focus:ring-1 focus:ring-liminal-primary focus:outline-none"
+        />
+      </FormField>
+
+      <LevelClassSelectField v-model="form.levelClassId" :error="levelClassError" />
     </div>
 
     <FormField label="Descripción" control-id="reporte-descripcion">
