@@ -42,6 +42,14 @@ export const ReportApi = {
     return data
   },
 
+  async findByAuthor(page?: number): Promise<PaginatedResponse<Report>> {
+    const { data } = await ApiClient.get<PaginatedResponse<Report>>('/report/me', {
+      params: { page },
+    })
+
+    return data
+  },
+
   async findById(id: number): Promise<Report> {
     const { data } = await ApiClient.get<Report>(`/report/${id}`)
 

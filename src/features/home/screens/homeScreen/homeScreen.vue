@@ -68,8 +68,7 @@ function goNext() {
 }
 
 function selectReport(id: number) {
-  // TODO: navegar al detalle del reporte cuando exista la ruta correspondiente.
-  console.info('Reporte seleccionado', id)
+  router.push({ name: 'report-detail', params: { id } })
 }
 
 function exploreMoreLevels() {

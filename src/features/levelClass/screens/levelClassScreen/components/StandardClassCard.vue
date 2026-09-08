@@ -16,10 +16,6 @@ const props = withDefaults(defineProps<Props>(), {
   autofocusHeader: false,
 })
 
-const emit = defineEmits<{
-  viewLevels: [id: number]
-}>()
-
 const headerId = useId()
 const panelId = useId()
 

@@ -10,6 +10,18 @@ export function useReport(page: MaybeRefOrGetter<number> = 1) {
 }
 
 /**
+ * Reportes publicados por el usuario autenticado (`/report/me`). La clave se
+ * mantiene aparte de la del archivo público para que ambas listas no compartan
+ * caché aunque pidan la misma página.
+ */
+export function useReportsByAuthor(page: MaybeRefOrGetter<number> = 1) {
+  return useQuery({
+    queryKey: ['reports', 'me', page],
+    queryFn: () => ReportApi.findByAuthor(toValue(page)),
+  })
+}
+
+/**
  * Pide un reporte concreto. La ruta `/reports/:id` entrega el identificador
  * como cadena, así que la pantalla lo convierte antes de pasarlo; la petición
  * espera a que sea un número válido para no llamar al servidor con `NaN`.

@@ -23,11 +23,12 @@ const emit = defineEmits<{
         <p class="mb-1.5 font-mono text-xs font-semibold tracking-[0.2em] text-white/40 uppercase">
           Archivo personal
         </p>
+
         <h2
-          id="archivo-personal-titulo"
-          class="text-3xl font-bold tracking-tight text-white uppercase sm:text-4xl md:text-5xl md:leading-none"
+          id="archivos-destacados-titulo"
+          class="mt-2 text-3xl font-bold tracking-tight text-white md:text-4xl"
         >
-          Reportes realizados
+          REPORTES DOCUMENTADOS
         </h2>
       </div>
 
