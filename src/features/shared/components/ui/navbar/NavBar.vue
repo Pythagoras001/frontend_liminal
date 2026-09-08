@@ -79,7 +79,7 @@ const emit = defineEmits<{
         :aria-label="`Ver el perfil de ${displayName}`"
       >
         <div
-          class="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-neutral-800 md:h-9 md:w-9"
+          class="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-neutral-800 md:h-9 md:w-9"
         >
           <img
             v-if="displayAvatar"
@@ -92,7 +92,7 @@ const emit = defineEmits<{
           <svg
             v-else
             aria-hidden="true"
-            class="h-4 w-4 text-white/55 md:h-[18px] md:w-[18px]"
+            class="h-4 w-4 text-white/55 md:h-4.5 md:w-4.5"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

@@ -32,7 +32,7 @@ const emit = defineEmits<{
 
       <button
         type="button"
-        class="group flex flex-shrink-0 items-center gap-2 font-mono text-xs font-semibold tracking-[0.15em] text-liminal-primary uppercase outline-none transition-colors duration-200 hover:text-liminal-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary md:text-sm"
+        class="group flex shrink-0 items-center gap-2 font-mono text-xs font-semibold tracking-[0.15em] text-liminal-primary uppercase outline-none transition-colors duration-200 hover:text-liminal-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary md:text-sm"
         @click="emit('exploreMore')"
       >
         <span>Explorar más niveles</span>

@@ -30,7 +30,7 @@ const hoverTitle = DEFAULT_ACCENT.hoverTitle
           aria-hidden="true"
           width="48"
           height="48"
-          class="h-12 w-12 flex-shrink-0 object-contain object-center"
+          class="h-12 w-12 shrink-0 object-contain object-center"
         />
         <span
           class="min-w-28 text-xl font-bold tracking-wide whitespace-nowrap text-white uppercase transition-colors"
@@ -47,7 +47,7 @@ const hoverTitle = DEFAULT_ACCENT.hoverTitle
 
       <span
         aria-hidden="true"
-        class="flex-shrink-0 pl-4 font-mono text-base text-neutral-600 transition-all group-hover:translate-x-0.5 group-hover:text-neutral-300"
+        class="shrink-0 pl-4 font-mono text-base text-neutral-600 transition-all group-hover:translate-x-0.5 group-hover:text-neutral-300"
       >
         ›
       </span>

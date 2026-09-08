@@ -20,7 +20,7 @@ const emit = defineEmits<{
 
     <button
       type="button"
-      class="inline-flex flex-shrink-0 items-center gap-2 self-start rounded border border-liminal-primary px-4 py-2.5 font-mono text-xs font-semibold tracking-[0.12em] text-liminal-primary uppercase outline-none transition-colors duration-200 hover:bg-liminal-primary hover:text-liminal-on-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary md:self-auto"
+      class="inline-flex shrink-0 items-center gap-2 self-start rounded border border-liminal-primary px-4 py-2.5 font-mono text-xs font-semibold tracking-[0.12em] text-liminal-primary uppercase outline-none transition-colors duration-200 hover:bg-liminal-primary hover:text-liminal-on-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary md:self-auto"
       @click="emit('create')"
     >
       <span aria-hidden="true" class="text-base leading-none font-bold">+</span>

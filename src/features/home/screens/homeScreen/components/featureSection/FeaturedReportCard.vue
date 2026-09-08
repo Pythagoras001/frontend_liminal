@@ -29,7 +29,7 @@ const clasificacion = computed(() =>
     class="group flex flex-col overflow-hidden border border-white/10 bg-liminal-surface text-left outline-none transition-colors duration-300 hover:border-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
     @click="emit('select', report.id)"
   >
-    <span class="relative block aspect-[4/5] w-full overflow-hidden bg-neutral-900">
+    <span class="relative block aspect-4/5 w-full overflow-hidden bg-neutral-900">
       <img
         :src="report.principalEvidence.image.mediumUrl"
         :alt="`Fotografía documental del ${titulo}`"
@@ -37,7 +37,7 @@ const clasificacion = computed(() =>
         class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
       <span
-        class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
+        class="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent"
       />
     </span>
 

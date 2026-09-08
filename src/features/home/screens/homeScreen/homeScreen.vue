@@ -55,7 +55,6 @@ function selectLevel(id: string) {
 
 function goToOffset(offset: number) {
   const nextIndex = (activeIndex.value + offset + niveles.length) % niveles.length
-  // nextIndex is always within [0, niveles.length) thanks to the modulo above.
   activeLevelId.value = niveles[nextIndex]!.id
 }
 

@@ -38,7 +38,7 @@ const compactReports = computed(() => props.reports.slice(1))
         </p>
       </div>
 
-      <div class="flex flex-shrink-0 items-center gap-4 self-stretch sm:self-end sm:pb-1.5">
+      <div class="flex shrink-0 items-center gap-4 self-stretch sm:self-end sm:pb-1.5">
         <span class="hidden h-px w-10 bg-white/20 sm:inline-block" />
         <span class="font-mono text-[11px] tracking-[0.15em] text-white/50 uppercase md:text-xs">
           Fotografías reales. Experiencias reales. Un archivo vivo.

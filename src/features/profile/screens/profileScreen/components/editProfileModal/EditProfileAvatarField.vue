@@ -116,7 +116,7 @@ function onChange(event: Event) {
 
         <!-- El nombre del fichero confirma qué imagen se subirá al guardar. -->
         <p v-if="avatar" class="flex items-center gap-2 font-mono text-[11px] text-white/60">
-          <span class="max-w-[14rem] truncate">{{ avatar.name }}</span>
+          <span class="max-w-56 truncate">{{ avatar.name }}</span>
           <button
             type="button"
             class="rounded-sm border border-white/10 px-1.5 py-0.5 tracking-wider text-white/50 uppercase outline-none transition-colors hover:border-red-500/50 hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"

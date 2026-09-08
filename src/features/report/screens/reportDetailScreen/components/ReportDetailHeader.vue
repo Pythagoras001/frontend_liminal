@@ -58,7 +58,7 @@ const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
         <span aria-hidden="true" class="text-white/20">|</span>
         <span class="flex items-center gap-2">
           <span
-            class="h-4 w-4 flex-shrink-0 overflow-hidden rounded-full border border-white/20 bg-white/10"
+            class="h-4 w-4 shrink-0 overflow-hidden rounded-full border border-white/20 bg-white/10"
           >
             <img
               v-if="report.author.profileImage"

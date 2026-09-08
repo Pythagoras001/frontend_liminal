@@ -39,7 +39,7 @@ const imageAlt = computed(() => `${props.report.description} — Nivel ${props.r
       class="flex flex-1 flex-col text-left outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-liminal-primary"
       @click="emit('select', report.id)"
     >
-      <span class="relative block aspect-[16/10] w-full overflow-hidden bg-black">
+      <span class="relative block aspect-16/10 w-full overflow-hidden bg-black">
         <img
           :src="report.principalEvidence.image.mediumUrl"
           :alt="imageAlt"
@@ -48,7 +48,7 @@ const imageAlt = computed(() => `${props.report.description} — Nivel ${props.r
         />
         <span
           aria-hidden="true"
-          class="absolute inset-0 bg-gradient-to-t from-liminal-surface via-transparent to-transparent opacity-60"
+          class="absolute inset-0 bg-linear-to-t from-liminal-surface via-transparent to-transparent opacity-60"
         ></span>
       </span>
 
@@ -82,7 +82,7 @@ const imageAlt = computed(() => `${props.report.description} — Nivel ${props.r
 
       <div v-else class="flex items-center gap-2">
         <span
-          class="flex h-5 w-5 flex-shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5"
+          class="flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/5"
         >
           <img
             v-if="report.author.profileImage"

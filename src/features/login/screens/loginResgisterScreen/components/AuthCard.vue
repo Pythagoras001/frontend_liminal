@@ -47,7 +47,7 @@ function switchTo(tab: AuthTab) {
 <template>
   <section
     aria-label="Panel de autenticación"
-    class="w-full max-w-[452px] border border-white/10 bg-liminal-surface/90 px-7 pt-10 pb-9 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur-md sm:px-10"
+    class="w-full max-w-113 border border-white/10 bg-liminal-surface/90 px-7 pt-10 pb-9 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur-md sm:px-10"
   >
     <div class="mb-8 text-center">
       <h1

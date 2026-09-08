@@ -28,7 +28,7 @@ const relativeTime = computed(() => formatRelativeTime(props.report.createdAt))
   >
     <span
       class="relative block w-full overflow-hidden bg-neutral-900"
-      :class="featured ? 'aspect-[3/4]' : 'aspect-[16/9]'"
+      :class="featured ? 'aspect-3/4' : 'aspect-video'"
     >
       <img
         :src="report.principalEvidence.image.mediumUrl"
@@ -42,7 +42,7 @@ const relativeTime = computed(() => formatRelativeTime(props.report.createdAt))
       <span class="flex items-center justify-between gap-3">
         <span class="flex items-center gap-2.5">
           <span
-            class="h-8 w-8 flex-shrink-0 overflow-hidden rounded-full border border-white/20 bg-neutral-800"
+            class="h-8 w-8 shrink-0 overflow-hidden rounded-full border border-white/20 bg-neutral-800"
           >
             <img
               v-if="report.author.profileImage"

@@ -33,7 +33,7 @@ const specs = computed(() => [
         aria-hidden="true"
         width="48"
         height="48"
-        class="h-12 w-12 flex-shrink-0 object-contain object-center"
+        class="h-12 w-12 shrink-0 object-contain object-center"
       />
 
       <div>
@@ -81,7 +81,7 @@ const specs = computed(() => [
       </h3>
       <div class="flex items-center gap-3">
         <span
-          class="h-7 w-7 flex-shrink-0 overflow-hidden rounded-full border border-white/10 bg-white/10"
+          class="h-7 w-7 shrink-0 overflow-hidden rounded-full border border-white/10 bg-white/10"
         >
           <img
             v-if="author.profileImage"

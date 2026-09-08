@@ -51,7 +51,7 @@ const statusTags = computed(() => [
             aria-hidden="true"
             width="48"
             height="48"
-            class="h-12 w-12 flex-shrink-0 object-contain object-center"
+            class="h-12 w-12 shrink-0 object-contain object-center"
           />
           <div>
             <span class="block font-mono text-[9px] tracking-[0.2em] text-neutral-400 uppercase">
@@ -124,15 +124,15 @@ const statusTags = computed(() => [
         :src="levelClass.iconImage.mediumUrl"
         :alt="`Nivel representativo de la ${classNumberLabel.toLowerCase()}`"
         loading="lazy"
-        class="h-full w-full object-cover object-center brightness-90 contrast-125 grayscale-[20%] transition-transform duration-700 hover:scale-105"
+        class="h-full w-full object-cover object-center brightness-90 contrast-125 grayscale-20 transition-transform duration-700 hover:scale-105"
       />
       <span
         aria-hidden="true"
-        class="absolute inset-0 hidden bg-gradient-to-r from-liminal-surface via-transparent to-black/30 md:block"
+        class="absolute inset-0 hidden bg-linear-to-r from-liminal-surface via-transparent to-black/30 md:block"
       />
       <span
         aria-hidden="true"
-        class="absolute inset-0 bg-gradient-to-t from-liminal-surface via-transparent to-transparent md:hidden"
+        class="absolute inset-0 bg-linear-to-t from-liminal-surface via-transparent to-transparent md:hidden"
       />
     </div>
   </article>

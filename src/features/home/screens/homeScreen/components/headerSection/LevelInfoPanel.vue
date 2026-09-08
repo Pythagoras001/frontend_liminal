@@ -21,7 +21,7 @@ const materiales = computed(() => props.nivel.materiales.join(' · '))
 </script>
 
 <template>
-  <div class="flex w-full max-w-[30rem] flex-col items-start gap-6">
+  <div class="flex w-full max-w-120 flex-col items-start gap-6">
     <div class="flex items-center gap-3 font-mono text-xs tracking-[0.2em] text-white/70 uppercase">
       <div class="flex items-center gap-2">
         <span class="h-1.5 w-1.5 rounded-full bg-white" />
