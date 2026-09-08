@@ -64,7 +64,7 @@ const imageAlt = computed(() => `${props.report.description} — Nivel ${props.r
         <h3
           class="line-clamp-1 text-lg font-bold tracking-tight text-white uppercase transition-colors group-hover:text-liminal-primary sm:text-xl"
         >
-          {{ report.description }}
+          {{ report.title }}
         </h3>
       </span>
     </button>

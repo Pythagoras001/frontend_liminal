@@ -82,7 +82,7 @@ const materiales = computed(() => props.nivel.materiales.join(' · '))
             stroke-linejoin="round"
           />
         </svg>
-        <span>Explorar nivel</span>
+        <span>Explorar Niveles</span>
       </button>
     </div>
   </div>

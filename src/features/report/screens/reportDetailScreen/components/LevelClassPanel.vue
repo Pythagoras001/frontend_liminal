@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import type { Author } from '@/features/report/model/Author'
 import type { LevelClass } from '@/features/levelClass/model/LevelClass'
 import { getSurvivalClassTypeLabel } from '@/features/levelClass/model/SurvivalClassType'
-import ClassHexBadge from './ClassHexBadge.vue'
 
 interface Props {
   levelClass: LevelClass
@@ -28,7 +27,14 @@ const specs = computed(() => [
 <template>
   <section aria-labelledby="clasificacion-titulo" class="border-l border-white/10 pl-6 lg:pl-7">
     <div class="mb-6 flex items-center gap-4">
-      <ClassHexBadge :level-class="levelClass" />
+      <img
+        :src="levelClass.iconImage.thumbnailUrl"
+        alt=""
+        aria-hidden="true"
+        width="48"
+        height="48"
+        class="h-12 w-12 flex-shrink-0 object-contain object-center"
+      />
 
       <div>
         <span class="block font-mono text-[10px] tracking-[0.25em] text-white/40 uppercase">
@@ -36,7 +42,7 @@ const specs = computed(() => [
         </span>
         <h2
           id="clasificacion-titulo"
-          class="text-xl font-bold tracking-wide text-liminal-primary uppercase"
+          class="text-xl font-bold tracking-wide text-white/40 uppercase"
         >
           {{ levelClass.classNumber }}
         </h2>
@@ -50,10 +56,7 @@ const specs = computed(() => [
         class="flex items-center justify-between gap-4 py-2.5"
       >
         <dt class="text-white/45">{{ spec.label }}</dt>
-        <dd
-          :class="spec.highlight ? 'text-liminal-primary' : 'text-neutral-200'"
-          class="text-right"
-        >
+        <dd class="text-right text-white/40">
           {{ spec.value }}
         </dd>
       </div>

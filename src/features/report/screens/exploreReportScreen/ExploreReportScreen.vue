@@ -3,8 +3,8 @@ import { computed, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
+import { useReport } from '@/features/report/hooks/useReport'
 import { useReportArchiveFilters } from '@/features/report/hooks/useReportArchiveFilters'
-import { exploreReportsPage } from './data/exploreReports.mock'
 import ReportArchiveHeader from './components/ReportArchiveHeader.vue'
 import ReportToolbar from './components/ReportToolbar.vue'
 import ReportGrid from './components/ReportGrid.vue'
@@ -15,18 +15,22 @@ const REPORT_LIST_ID = 'reportes-listado'
 
 const router = useRouter()
 
-// TODO: sustituir el mock por `useReport(page)` cuando el endpoint esté disponible.
-const archive = shallowRef(exploreReportsPage)
+/**
+ * Página pedida al servidor. Es la única fuente de verdad del listado: se pasa
+ * como `ref` para que la query la incluya en su clave y vuelva a pedir los
+ * datos al cambiarla.
+ */
+const page = shallowRef(1)
 
-const { searchQuery, sortOrder, sortOptions, visibleReports } = useReportArchiveFilters(
-  () => archive.value.data,
-)
+const { data: archive, isPending, isError, refetch } = useReport(page)
 
-const page = computed(() => archive.value.page)
+const reports = computed(() => archive.value?.data ?? [])
+
+const { searchQuery, sortOrder, sortOptions, visibleReports } = useReportArchiveFilters(reports)
 
 function changePage(nextPage: number) {
-  // TODO: pedir la página al servidor; el mock solo contiene la primera.
-  console.info('Cambiar a la página', nextPage)
+  page.value = nextPage
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 function createReport() {
@@ -55,30 +59,57 @@ function likeReport(id: number) {
     <main class="mx-auto w-full max-w-[1520px] flex-1 px-4 py-8 sm:px-6 md:py-10 lg:px-8">
       <ReportArchiveHeader @create="createReport" />
 
-      <ReportToolbar
-        v-model:search="searchQuery"
-        v-model:sort-order="sortOrder"
-        :sort-options="sortOptions"
-        :total="archive.total"
-        :controls-id="REPORT_LIST_ID"
-        @filter="openFilters"
-      />
+      <p
+        v-if="isPending"
+        aria-live="polite"
+        class="border-t border-b border-white/10 px-3 py-6 font-mono text-xs text-neutral-500 uppercase"
+      >
+        Recuperando el archivo de reportes…
+      </p>
 
-      <ReportGrid
-        :reports="visibleReports"
-        :list-id="REPORT_LIST_ID"
-        @select="selectReport"
-        @like="likeReport"
-      />
+      <div
+        v-else-if="isError"
+        role="alert"
+        class="flex flex-col items-start gap-3 border-t border-b border-white/10 px-3 py-6"
+      >
+        <p class="font-mono text-xs text-neutral-500 uppercase">
+          No se pudo recuperar el archivo de reportes.
+        </p>
+        <button
+          type="button"
+          class="border border-white/20 px-3 py-1.5 font-mono text-[10px] tracking-[0.22em] text-neutral-300 uppercase transition-colors hover:border-white/40 hover:text-white"
+          @click="refetch()"
+        >
+          Reintentar
+        </button>
+      </div>
 
-      <ReportPagination
-        :page="page"
-        :page-size="archive.pageSize"
-        :total="archive.total"
-        :total-pages="archive.totalPages"
-        :visible-count="visibleReports.length"
-        @update:page="changePage"
-      />
+      <template v-else-if="archive">
+        <ReportToolbar
+          v-model:search="searchQuery"
+          v-model:sort-order="sortOrder"
+          :sort-options="sortOptions"
+          :total="archive.total"
+          :controls-id="REPORT_LIST_ID"
+          @filter="openFilters"
+        />
+
+        <ReportGrid
+          :reports="visibleReports"
+          :list-id="REPORT_LIST_ID"
+          @select="selectReport"
+          @like="likeReport"
+        />
+
+        <ReportPagination
+          :page="archive.page"
+          :page-size="archive.pageSize"
+          :total="archive.total"
+          :total-pages="archive.totalPages"
+          :visible-count="visibleReports.length"
+          @update:page="changePage"
+        />
+      </template>
     </main>
 
     <Footer />

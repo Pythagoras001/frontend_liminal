@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
+import { useRouter } from 'vue-router'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
 import LevelShowcase from './components/headerSection/LevelShowcase.vue'
@@ -8,6 +9,8 @@ import CommunityRegisterSection from './components/comunityRegisterSection/Commu
 import { niveles } from './data/niveles.mock'
 import { featuredReports } from './data/reports.mock'
 import { communityReports } from './data/communityReports.mock'
+
+const router = useRouter()
 
 const firstLevel = niveles[0]
 if (!firstLevel) {
@@ -56,6 +59,10 @@ function exploreMoreLevels() {
   console.info('Explorar más niveles')
 }
 
+function exploreLevel() {
+  router.push({ name: 'reports' })
+}
+
 function publishFinding() {
   // TODO: navegar al formulario de publicación cuando exista la ruta correspondiente.
   console.info('Publicar un hallazgo')
@@ -97,6 +104,7 @@ function openTerminal() {
           @select="selectLevel"
           @prev="goPrev"
           @next="goNext"
+          @explore="exploreLevel"
         />
       </main>
     </section>

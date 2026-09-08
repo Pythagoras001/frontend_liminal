@@ -10,8 +10,8 @@ export const niveles: Nivel[] = [
     id: 'nivel-0',
     numero: '00',
     nombre: 'Nivel 0',
-    subtitulo: 'Sala amarilla',
-    clase: 'CLASE 1',
+    subtitulo: 'El Lobby',
+    clase: 'CLASE 0',
     estado: 'ESTABLE',
     entidades: 'ENTIDADES ESCASAS',
     materiales: ['Alfombra amarilla', 'Papel tapiz', 'Zumbido eléctrico'],
@@ -26,7 +26,7 @@ export const niveles: Nivel[] = [
     id: 'nivel-1',
     numero: '01',
     nombre: 'Nivel 1',
-    subtitulo: 'Zona habitable',
+    subtitulo: 'Zona Habitable',
     clase: 'CLASE 1',
     estado: 'ESTABLE',
     entidades: 'ENTIDADES ESCASAS',
@@ -51,6 +51,6 @@ export const niveles: Nivel[] = [
     activo: false,
     imgFondo: 'https://res.cloudinary.com/covylvlk/image/upload/v1788745065/fondoPoolRoom.jpg',
     imgCardExpo:
-      'https://lh3.googleusercontent.com/aida/AEtjO1VMlZbEP9P_oaCG-zitIPqyFH4pt2-48xQtNoFBDXatwv40WYPoXIV3-5Pf81iI6n9jutaPaldBHqZvN3ETfhn6xWEO6_RmzoZroQfJhJsXgo8yjTb5gP_R9R3aYMVSmlvjZ4ojTpuTyKMPEFFJIMQNAahlH24obw_rfoqBHGNq6oqOgkeeG25tJn7ZMgF75109gPqMwiQ6sTE7qI4X8UmryVNe9w1CA-I5WJuSKhjqHrQzCLMJcixwuVQ',
+      'https://res.cloudinary.com/covylvlk/image/upload/v1788868711/imagen_2026-09-08_065825707.png',
   },
 ]
