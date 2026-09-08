@@ -68,6 +68,15 @@ export const ReportApi = {
     return data
   },
 
+  /**
+   * Elimina un reporte. El servidor comprueba contra el token que quien pide el
+   * borrado es su autor y responde `204 No Content`: no hay cuerpo que leer, así
+   * que la interfaz ajusta su caché por su cuenta.
+   */
+  async remove(id: number): Promise<void> {
+    await ApiClient.delete(`/report/${id}`)
+  },
+
   async create(draft: NewReportDraft): Promise<Report> {
     // Sin esta cabecera Axios convertiría el `FormData` a JSON, porque la
     // instancia declara `application/json` por defecto. El navegador la

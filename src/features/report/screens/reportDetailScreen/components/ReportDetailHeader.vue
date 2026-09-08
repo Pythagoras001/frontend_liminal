@@ -7,9 +7,16 @@ interface Props {
   report: Report
   /** Número de expediente ya formateado, ej. "001". */
   archiveNumber: string
+  /**
+   * Ofrece la acción de borrado. Quien decide es la pantalla, que es la única
+   * que conoce al usuario de la sesión; la cabecera solo pinta lo que le digan.
+   */
+  canDelete?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  canDelete: false,
+})
 
 const emit = defineEmits<{
   /**
@@ -17,7 +24,8 @@ const emit = defineEmits<{
    * misma que ya se emitió la retira, porque el servidor hace el toggle.
    */
   rate: [id: number, liked: boolean]
-  options: [id: number]
+  /** Petición de borrado; la confirmación la pide la pantalla. */
+  delete: [id: number]
 }>()
 
 const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
@@ -108,6 +116,29 @@ const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
           <path d="M4 20L20 4" stroke-linecap="round" />
         </svg>
         <span>No me gusta</span>
+      </button>
+
+      <button
+        v-if="canDelete"
+        type="button"
+        class="flex items-center gap-2 border border-red-500/40 px-5 py-2 font-mono text-xs tracking-[0.12em] text-red-400 uppercase outline-none transition-colors hover:border-red-500/80 hover:bg-red-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+        @click="emit('delete', report.id)"
+      >
+        <svg
+          aria-hidden="true"
+          class="h-3.5 w-3.5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span>Eliminar</span>
       </button>
     </div>
   </header>
