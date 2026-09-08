@@ -85,7 +85,7 @@ function onChange(event: Event) {
       <div class="space-y-1.5">
         <label
           :for="inputId"
-          class="inline-flex cursor-pointer items-center gap-2 rounded-sm border border-white/15 bg-white/[0.03] px-3.5 py-1.5 font-mono text-xs tracking-wider text-neutral-200 transition-colors hover:border-white/40 hover:bg-white/[0.07] focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-liminal-primary"
+          class="inline-flex cursor-pointer items-center gap-2 rounded-sm border border-white/15 bg-white/3 px-3.5 py-1.5 font-mono text-xs tracking-wider text-neutral-200 transition-colors hover:border-white/40 hover:bg-white/[0.07] focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-liminal-primary"
         >
           <svg
             aria-hidden="true"

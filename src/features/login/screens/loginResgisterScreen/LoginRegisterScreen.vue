@@ -81,7 +81,7 @@ function handleRegister(credentials: RegisterCredentials) {
     <div class="fixed inset-0 z-0 overflow-hidden">
       <img :src="backgroundUrl" alt="" class="h-full w-full object-cover object-center" />
       <div
-        class="absolute inset-0 bg-gradient-to-b from-liminal-bg/80 via-liminal-bg/40 to-liminal-bg/90"
+        class="absolute inset-0 bg-linear-to-b from-liminal-bg/80 via-liminal-bg/40 to-liminal-bg/90"
       />
       <div class="absolute inset-0 shadow-[inset_0_0_140px_rgba(0,0,0,0.85)]" />
     </div>
