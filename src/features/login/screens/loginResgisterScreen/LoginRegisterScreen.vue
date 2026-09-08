@@ -72,10 +72,6 @@ function handleRegister(credentials: RegisterCredentials) {
   })
 }
 
-function handleForgotPassword() {
-  // TODO: navegar al flujo de recuperación de contraseña cuando exista la ruta correspondiente.
-  console.info('Recuperar contraseña')
-}
 </script>
 
 <template>
@@ -102,7 +98,6 @@ function handleForgotPassword() {
         :register-error="registerErrorMessage"
         @login="handleLogin"
         @register="handleRegister"
-        @forgot-password="handleForgotPassword"
       />
     </main>
 

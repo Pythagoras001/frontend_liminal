@@ -15,21 +15,6 @@ const { data: levelClasses, isPending, isError, refetch } = useLevelClass()
 const { typeOptions, activeType, visibleClasses, selectType } = useSurvivalClassTypeFilter(
   () => levelClasses.value ?? [],
 )
-
-function selectClass(id: number) {
-  // TODO: navegar al detalle de la clase cuando exista la ruta correspondiente.
-  console.info('Clase seleccionada', id)
-}
-
-function viewLevels(id: number) {
-  // TODO: navegar al listado de niveles de la clase cuando exista la ruta correspondiente.
-  console.info('Ver niveles de la clase', id)
-}
-
-function openClassificationSystem() {
-  // TODO: navegar a la explicación del sistema de clasificación cuando exista la ruta.
-  console.info('Conocer el sistema de clasificación')
-}
 </script>
 
 <template>
@@ -69,8 +54,6 @@ function openClassificationSystem() {
           :classes="visibleClasses"
           :class-type="activeType"
           :list-id="CLASS_LIST_ID"
-          @select="selectClass"
-          @view-levels="viewLevels"
         />
 
         <ClassTypeSection
@@ -78,7 +61,6 @@ function openClassificationSystem() {
           :active-type="activeType"
           :controls-id="CLASS_LIST_ID"
           @select="selectType"
-          @learn-more="openClassificationSystem"
         />
       </div>
     </main>

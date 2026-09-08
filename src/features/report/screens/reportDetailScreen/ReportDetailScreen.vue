@@ -177,10 +177,7 @@ function closeEdit() {
   resetEditMutation()
 }
 
-function viewClass(id: number) {
-  // TODO: enlazar al detalle de la clase cuando exista esa ruta; de momento
-  // se abre el catálogo completo de clases.
-  console.info('Ver clase completa', id)
+function viewClass() {
   router.push({ name: 'class' })
 }
 </script>

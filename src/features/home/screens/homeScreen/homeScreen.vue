@@ -71,11 +71,6 @@ function selectReport(id: number) {
   router.push({ name: 'report-detail', params: { id } })
 }
 
-function exploreMoreLevels() {
-  // TODO: navegar al listado completo de niveles cuando exista la ruta correspondiente.
-  console.info('Explorar más niveles')
-}
-
 function exploreLevel() {
   router.push({ name: 'reports' })
 }
@@ -86,21 +81,6 @@ function publishFinding() {
 
 function viewAllRegisters() {
   router.push({ name: 'reports' })
-}
-
-function openTerms() {
-  // TODO: navegar a los términos de expedición cuando exista la ruta correspondiente.
-  console.info('Términos de expedición')
-}
-
-function openSecurityProtocol() {
-  // TODO: navegar al protocolo de seguridad cuando exista la ruta correspondiente.
-  console.info('Protocolo de seguridad')
-}
-
-function openTerminal() {
-  // TODO: navegar al terminal cuando exista la ruta correspondiente.
-  console.info('Terminal')
 }
 </script>
 
@@ -150,11 +130,7 @@ function openTerminal() {
     </div>
 
     <template v-else>
-      <FeaturedReportsSection
-        :reports="featuredReports"
-        @select="selectReport"
-        @explore-more="exploreMoreLevels"
-      />
+      <FeaturedReportsSection :reports="featuredReports" @select="selectReport" />
 
       <CommunityRegisterSection
         :reports="communityReports"
@@ -164,10 +140,6 @@ function openTerminal() {
       />
     </template>
 
-    <Footer
-      @terms-click="openTerms"
-      @security-click="openSecurityProtocol"
-      @terminal-click="openTerminal"
-    />
+    <Footer />
   </div>
 </template>
