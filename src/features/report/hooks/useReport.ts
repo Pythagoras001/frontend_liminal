@@ -2,6 +2,7 @@ import { computed, toValue, type MaybeRefOrGetter } from 'vue'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { ReportApi } from '@/features/report/api/ReportApi'
 import type { Report } from '@/features/report/model/Report'
+import type { UpdateReportPayload } from '@/features/report/model/EditReportDraft'
 import type { PaginatedResponse } from '@/features/shared/model/PaginatedResponse'
 
 export function useReport(page: MaybeRefOrGetter<number> = 1) {
@@ -58,6 +59,53 @@ export function useRateReport() {
         current ? { ...current, likesCount: report.likesCount } : current,
       )
       queryClient.invalidateQueries({ queryKey: ['reports'] })
+    },
+  })
+}
+
+/**
+ * Guarda los cambios del modal de edición de reporte.
+ *
+ * La caché se ajusta a mano en vez de invalidarla: el expediente ya editado se
+ * escribe en el detalle y en las fichas que lo tuvieran dentro de los listados
+ * guardados. El prefijo `['reports']` alcanza a la vez el archivo público
+ * (`['reports', page]`) y el personal (`['reports', 'me', page]`).
+ *
+ * Del expediente que responde el servidor solo se copian los campos que el
+ * modal edita, por el mismo motivo que en `useRateReport`: la respuesta puede
+ * venir sin sus relaciones (autor, evidencias) y volcarla entera dejaría al
+ * detalle pintando campos inexistentes. `levelClass` se toma solo cuando llega,
+ * porque de él depende el panel de clasificación.
+ */
+export function useEditReport() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ reportId, payload }: { reportId: number; payload: UpdateReportPayload }) =>
+      ReportApi.update(reportId, payload),
+    onSuccess: (updated: Report) => {
+      const applyEdit = (report: Report): Report => ({
+        ...report,
+        title: updated.title,
+        nivel: updated.nivel,
+        description: updated.description,
+        levelClass: updated.levelClass ?? report.levelClass,
+      })
+
+      queryClient.setQueryData<Report>(['report', updated.id], (current) =>
+        current ? applyEdit(current) : current,
+      )
+
+      queryClient.setQueriesData<PaginatedResponse<Report>>({ queryKey: ['reports'] }, (archive) =>
+        archive
+          ? {
+              ...archive,
+              data: archive.data.map((report) =>
+                report.id === updated.id ? applyEdit(report) : report,
+              ),
+            }
+          : archive,
+      )
     },
   })
 }

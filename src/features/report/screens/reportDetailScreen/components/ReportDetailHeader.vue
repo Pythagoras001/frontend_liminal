@@ -12,10 +12,13 @@ interface Props {
    * que conoce al usuario de la sesión; la cabecera solo pinta lo que le digan.
    */
   canDelete?: boolean
+  /** Ofrece la acción de edición, con el mismo criterio que `canDelete`. */
+  canEdit?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   canDelete: false,
+  canEdit: false,
 })
 
 const emit = defineEmits<{
@@ -26,6 +29,8 @@ const emit = defineEmits<{
   rate: [id: number, liked: boolean]
   /** Petición de borrado; la confirmación la pide la pantalla. */
   delete: [id: number]
+  /** Petición de edición; el formulario lo abre la pantalla. */
+  edit: [id: number]
 }>()
 
 const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
@@ -116,6 +121,29 @@ const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
           <path d="M4 20L20 4" stroke-linecap="round" />
         </svg>
         <span>No me gusta</span>
+      </button>
+
+      <button
+        v-if="canEdit"
+        type="button"
+        class="flex items-center gap-2 border border-white/15 px-5 py-2 font-mono text-xs tracking-[0.12em] text-white/60 uppercase outline-none transition-colors hover:border-liminal-primary/60 hover:text-liminal-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
+        @click="emit('edit', report.id)"
+      >
+        <svg
+          aria-hidden="true"
+          class="h-3.5 w-3.5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zM19.5 14.25v4.5A2.25 2.25 0 0117.25 21H5.25A2.25 2.25 0 013 18.75V6.75A2.25 2.25 0 015.25 4.5h4.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span>Editar</span>
       </button>
 
       <button

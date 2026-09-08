@@ -2,6 +2,7 @@ import { ApiClient } from '@/services/ApiClient'
 import type { PaginatedResponse } from '@/features/shared/model/PaginatedResponse'
 import type { Report } from '@/features/report/model/Report'
 import type { NewReportDraft } from '@/features/report/model/NewReportDraft'
+import type { UpdateReportPayload } from '@/features/report/model/EditReportDraft'
 
 /**
  * Traduce el borrador del formulario al `multipart/form-data` que espera el
@@ -75,6 +76,21 @@ export const ReportApi = {
    */
   async remove(id: number): Promise<void> {
     await ApiClient.delete(`/report/${id}`)
+  },
+
+  /**
+   * Actualiza un reporte propio. El servidor comprueba contra el token que quien
+   * edita es su autor y responde con el expediente ya actualizado.
+   *
+   * Va como JSON y no como `multipart/form-data` porque la edición no toca las
+   * evidencias: solo el título, el nivel, la clase y el relato. Los cuatro
+   * campos son opcionales para el servidor, así que se manda únicamente lo que
+   * cambió y el resto se queda como estaba.
+   */
+  async update(id: number, payload: UpdateReportPayload): Promise<Report> {
+    const { data } = await ApiClient.patch<Report>(`/report/${id}`, payload)
+
+    return data
   },
 
   async create(draft: NewReportDraft): Promise<Report> {

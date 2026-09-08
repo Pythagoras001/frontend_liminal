@@ -68,7 +68,13 @@ const compactReports = computed(() => props.reports.slice(1))
         class="inline-flex items-center gap-3 rounded-[3px] bg-liminal-primary px-6 py-3.5 text-xs font-bold tracking-wider text-liminal-on-primary uppercase shadow-lg shadow-liminal-primary/10 outline-none transition-all duration-150 hover:bg-liminal-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-95 md:text-sm"
         @click="emit('publish')"
       >
-        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <svg
+          class="h-4 w-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
           <path d="M12 5v14m-7-7h14" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span>Publicar un hallazgo</span>

@@ -5,13 +5,20 @@ import { isAxiosError } from 'axios'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
 import { useCurrentUser } from '@/features/login/hooks/useCurrentUser'
-import { useDeleteReport, useRateReport, useReportById } from '@/features/report/hooks/useReport'
+import {
+  useDeleteReport,
+  useEditReport,
+  useRateReport,
+  useReportById,
+} from '@/features/report/hooks/useReport'
+import type { UpdateReportPayload } from '@/features/report/model/EditReportDraft'
 import ReportDetailHeader from './components/ReportDetailHeader.vue'
 import EvidenceFigure from './components/EvidenceFigure.vue'
 import ReportFindingLog from './components/ReportFindingLog.vue'
 import LevelClassPanel from './components/LevelClassPanel.vue'
 import EvidenceGallery from './components/EvidenceGallery.vue'
 import DeleteReportModal from './components/DeleteReportModal.vue'
+import EditReportModal from './components/editReportModal/EditReportModal.vue'
 
 interface Props {
   /** Id del reporte tomado de la ruta `/reports/:id`. */
@@ -59,9 +66,9 @@ function rate(id: number, liked: boolean) {
 const { data: currentUser } = useCurrentUser()
 
 /**
- * Solo el autor ve la acción de borrado. Es una comprobación de interfaz, no de
- * seguridad: quien decide de verdad es el servidor a partir del token, aquí solo
- * se evita ofrecer un botón que iba a responder 403.
+ * Solo el autor ve las acciones de edición y borrado. Es una comprobación de
+ * interfaz, no de seguridad: quien decide de verdad es el servidor a partir del
+ * token, aquí solo se evita ofrecer un botón que iba a responder 403.
  */
 const isOwner = computed(
   () => currentUser.value !== undefined && currentUser.value.id === report.value?.author.id,
@@ -122,6 +129,54 @@ function closeDeleteConfirmation() {
   resetDeleteMutation()
 }
 
+/** Visibilidad del formulario de edición. */
+const isEditing = shallowRef(false)
+
+const {
+  mutate: editReport,
+  reset: resetEditMutation,
+  isPending: isSaving,
+  error: editError,
+} = useEditReport()
+
+/** Traduce el fallo de la petición a un mensaje que el explorador entienda. */
+const editErrorMessage = computed(() => {
+  if (!editError.value) {
+    return undefined
+  }
+  if (isAxiosError(editError.value)) {
+    const status = editError.value.response?.status
+    if (status === 403) {
+      return 'Este expediente no es tuyo, así que no puedes modificarlo.'
+    }
+    if (status === 404) {
+      return 'El expediente ya no existe en el archivo.'
+    }
+  }
+  return 'No se pudieron guardar los cambios. Inténtalo de nuevo.'
+})
+
+/**
+ * El formulario solo se cierra si el servidor confirma; si falla, sigue abierto
+ * con el mensaje del error y lo que el explorador había escrito.
+ */
+function saveEdit(payload: UpdateReportPayload) {
+  if (!report.value) {
+    return
+  }
+
+  editReport({ reportId: report.value.id, payload }, { onSuccess: () => (isEditing.value = false) })
+}
+
+/**
+ * Al cerrar se descarta el error anterior para que la próxima apertura no
+ * arranque mostrando el fallo del intento pasado.
+ */
+function closeEdit() {
+  isEditing.value = false
+  resetEditMutation()
+}
+
 function viewClass(id: number) {
   // TODO: enlazar al detalle de la clase cuando exista esa ruta; de momento
   // se abre el catálogo completo de clases.
@@ -170,8 +225,10 @@ function viewClass(id: number) {
           :report="report"
           :archive-number="archiveNumber"
           :can-delete="isOwner"
+          :can-edit="isOwner"
           @rate="rate"
           @delete="isConfirmingDelete = true"
+          @edit="isEditing = true"
         />
 
         <div class="mt-2 grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
@@ -197,6 +254,15 @@ function viewClass(id: number) {
         </div>
       </template>
     </main>
+
+    <EditReportModal
+      v-if="isEditing && report"
+      :report="report"
+      :pending="isSaving"
+      :error-message="editErrorMessage"
+      @submit="saveEdit"
+      @close="closeEdit"
+    />
 
     <DeleteReportModal
       v-if="isConfirmingDelete && report"
