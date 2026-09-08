@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { isAxiosError } from 'axios'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
-import { useReportById } from '@/features/report/hooks/useReport'
+import { useRateReport, useReportById } from '@/features/report/hooks/useReport'
 import ReportDetailHeader from './components/ReportDetailHeader.vue'
 import EvidenceFigure from './components/EvidenceFigure.vue'
 import ReportFindingLog from './components/ReportFindingLog.vue'
@@ -43,9 +43,15 @@ const findingParagraphs = computed(() =>
     .filter((paragraph) => paragraph !== ''),
 )
 
-function likeReport(id: number) {
-  // TODO: enviar la valoración al servidor cuando exista el endpoint.
-  console.info('Valorar reporte', id)
+const { mutate: rateReport } = useRateReport()
+
+/**
+ * Al confirmarse la valoración se vuelve a pedir el expediente, de modo que el
+ * detalle muestre el estado que tiene el servidor en ese momento y no solo el
+ * contador que el hook dejó en la caché.
+ */
+function rate(id: number, liked: boolean) {
+  rateReport({ reportId: id, liked }, { onSuccess: () => refetch() })
 }
 
 function openOptions(id: number) {
@@ -59,7 +65,6 @@ function viewClass(id: number) {
   console.info('Ver clase completa', id)
   router.push({ name: 'class' })
 }
-
 </script>
 
 <template>
@@ -101,7 +106,7 @@ function viewClass(id: number) {
         <ReportDetailHeader
           :report="report"
           :archive-number="archiveNumber"
-          @like="likeReport"
+          @rate="rate"
           @options="openOptions"
         />
 

@@ -12,7 +12,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  like: [id: number]
+  /**
+   * Valoración del expediente. `liked` distingue las dos opciones; repetir la
+   * misma que ya se emitió la retira, porque el servidor hace el toggle.
+   */
+  rate: [id: number, liked: boolean]
   options: [id: number]
 }>()
 
@@ -63,7 +67,7 @@ const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
       <button
         type="button"
         class="flex items-center gap-2 border border-liminal-primary/80 px-5 py-2 font-mono text-xs tracking-[0.12em] text-liminal-primary uppercase outline-none transition-colors hover:bg-liminal-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
-        @click="emit('like', report.id)"
+        @click="emit('rate', report.id, true)"
       >
         <svg
           aria-hidden="true"
@@ -80,6 +84,30 @@ const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
           />
         </svg>
         <span>{{ report.likesCount }} Me gusta</span>
+      </button>
+
+      <button
+        type="button"
+        class="flex items-center gap-2 border border-white/15 px-5 py-2 font-mono text-xs tracking-[0.12em] text-white/60 uppercase outline-none transition-colors hover:border-white/40 hover:text-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
+        @click="emit('rate', report.id, false)"
+      >
+        <!-- El mismo corazón tachado: la contraparte del botón de al lado. -->
+        <svg
+          aria-hidden="true"
+          class="h-3.5 w-3.5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M4 20L20 4" stroke-linecap="round" />
+        </svg>
+        <span>No me gusta</span>
       </button>
     </div>
   </header>

@@ -3,7 +3,7 @@ import { computed, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
-import { useReport } from '@/features/report/hooks/useReport'
+import { useRateReport, useReport } from '@/features/report/hooks/useReport'
 import { useReportArchiveFilters } from '@/features/report/hooks/useReportArchiveFilters'
 import ReportArchiveHeader from './components/ReportArchiveHeader.vue'
 import ReportToolbar from './components/ReportToolbar.vue'
@@ -41,9 +41,14 @@ function selectReport(id: number) {
   router.push({ name: 'report-detail', params: { id } })
 }
 
+const { mutate: rateReport } = useRateReport()
+
+/**
+ * La tarjeta solo ofrece «me gusta»: repetirlo retira la valoración, porque el
+ * servidor hace el toggle a partir del token.
+ */
 function likeReport(id: number) {
-  // TODO: enviar la valoración al servidor cuando exista el endpoint.
-  console.info('Valorar reporte', id)
+  rateReport({ reportId: id, liked: true })
 }
 </script>
 

@@ -56,6 +56,18 @@ export const ReportApi = {
     return data
   },
 
+  /**
+   * Valora un reporte. El servidor identifica al votante por el token y hace el
+   * toggle por su cuenta: si ya figuraba entre quienes lo valoraron, retira su
+   * valoración. Devuelve el reporte con `likesCount` ya recalculado, que es lo
+   * único que la interfaz necesita pintar.
+   */
+  async rate(reportId: number, liked: boolean): Promise<Report> {
+    const { data } = await ApiClient.patch<Report>('/report', { reportId, liked })
+
+    return data
+  },
+
   async create(draft: NewReportDraft): Promise<Report> {
     // Sin esta cabecera Axios convertiría el `FormData` a JSON, porque la
     // instancia declara `application/json` por defecto. El navegador la

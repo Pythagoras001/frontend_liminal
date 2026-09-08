@@ -8,6 +8,7 @@ interface Props {
 defineProps<Props>()
 
 const emit = defineEmits<{
+  edit: []
   logout: []
 }>()
 </script>
@@ -65,12 +66,22 @@ const emit = defineEmits<{
       </div>
     </div>
 
-    <button
-      type="button"
-      class="self-end rounded-sm border border-white/15 px-6 py-2.5 font-mono text-xs tracking-[0.18em] text-neutral-200 uppercase outline-none transition-colors hover:border-white/40 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary active:scale-95 sm:text-sm md:self-center"
-      @click="emit('logout')"
-    >
-      Cerrar sesión
-    </button>
+    <div class="flex items-center gap-3 self-end md:self-center">
+      <button
+        type="button"
+        class="rounded-sm border border-white/15 px-6 py-2.5 font-mono text-xs tracking-[0.18em] text-neutral-200 uppercase outline-none transition-colors hover:border-white/40 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary active:scale-95 sm:text-sm"
+        @click="emit('edit')"
+      >
+        Editar perfil
+      </button>
+
+      <button
+        type="button"
+        class="rounded-sm border border-white/15 px-6 py-2.5 font-mono text-xs tracking-[0.18em] text-neutral-200 uppercase outline-none transition-colors hover:border-white/40 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary active:scale-95 sm:text-sm"
+        @click="emit('logout')"
+      >
+        Cerrar sesión
+      </button>
+    </div>
   </section>
 </template>
