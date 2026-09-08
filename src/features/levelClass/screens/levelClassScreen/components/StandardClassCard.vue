@@ -117,19 +117,6 @@ const statusTags = computed(() => [
           <p class="mt-2.5 max-w-sm text-xs leading-relaxed text-neutral-400">
             {{ levelClass.description }}
           </p>
-
-          <div class="mt-6 pt-1">
-            <button
-              type="button"
-              class="group inline-flex items-center gap-1.5 rounded font-mono text-xs font-bold tracking-[0.15em] text-liminal-primary uppercase outline-none transition-colors hover:text-liminal-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
-              @click="emit('viewLevels', levelClass.id)"
-            >
-              <span>Ver niveles</span>
-              <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">
-                →
-              </span>
-            </button>
-          </div>
         </div>
       </div>
     </div>

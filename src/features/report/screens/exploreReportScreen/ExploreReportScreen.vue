@@ -26,7 +26,7 @@ const { data: archive, isPending, isError, refetch } = useReport(page)
 
 const reports = computed(() => archive.value?.data ?? [])
 
-const { searchQuery, sortOrder, sortOptions, visibleReports } = useReportArchiveFilters(reports)
+const { searchQuery, visibleReports } = useReportArchiveFilters(reports)
 
 function changePage(nextPage: number) {
   page.value = nextPage
@@ -35,11 +35,6 @@ function changePage(nextPage: number) {
 
 function createReport() {
   router.push({ name: 'report-create' })
-}
-
-function openFilters() {
-  // TODO: abrir el panel de filtros avanzados cuando esté disponible.
-  console.info('Abrir filtros avanzados')
 }
 
 function selectReport(id: number) {
@@ -87,11 +82,8 @@ function likeReport(id: number) {
       <template v-else-if="archive">
         <ReportToolbar
           v-model:search="searchQuery"
-          v-model:sort-order="sortOrder"
-          :sort-options="sortOptions"
           :total="archive.total"
           :controls-id="REPORT_LIST_ID"
-          @filter="openFilters"
         />
 
         <ReportGrid

@@ -5,13 +5,11 @@ import { isAxiosError } from 'axios'
 import NavBar from '@/features/shared/components/ui/navbar/NavBar.vue'
 import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
 import { useReportById } from '@/features/report/hooks/useReport'
-import ReportBreadcrumbs from './components/ReportBreadcrumbs.vue'
 import ReportDetailHeader from './components/ReportDetailHeader.vue'
 import EvidenceFigure from './components/EvidenceFigure.vue'
 import ReportFindingLog from './components/ReportFindingLog.vue'
 import LevelClassPanel from './components/LevelClassPanel.vue'
 import EvidenceGallery from './components/EvidenceGallery.vue'
-import ReportDetailNav from './components/ReportDetailNav.vue'
 
 interface Props {
   /** Id del reporte tomado de la ruta `/reports/:id`. */
@@ -62,10 +60,6 @@ function viewClass(id: number) {
   router.push({ name: 'class' })
 }
 
-function goToNextReport() {
-  // TODO: navegar al siguiente expediente cuando el listado exponga su orden.
-  console.info('Siguiente reporte')
-}
 </script>
 
 <template>
@@ -104,8 +98,6 @@ function goToNextReport() {
       </div>
 
       <template v-else-if="report">
-        <ReportBreadcrumbs :nivel="report.nivel" :archive-number="archiveNumber" />
-
         <ReportDetailHeader
           :report="report"
           :archive-number="archiveNumber"
@@ -134,8 +126,6 @@ function goToNextReport() {
             <EvidenceGallery v-if="galleryEvidences.length" :evidences="galleryEvidences" />
           </div>
         </div>
-
-        <ReportDetailNav @next="goToNextReport" />
       </template>
     </main>
 

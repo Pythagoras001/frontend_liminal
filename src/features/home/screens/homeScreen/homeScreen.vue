@@ -6,11 +6,29 @@ import Footer from '@/features/shared/components/ui/footer/FooterLiminal.vue'
 import LevelShowcase from './components/headerSection/LevelShowcase.vue'
 import FeaturedReportsSection from './components/featureSection/FeaturedReportsSection.vue'
 import CommunityRegisterSection from './components/comunityRegisterSection/CommunityRegisterSection.vue'
+import { useReport } from '@/features/report/hooks/useReport'
 import { niveles } from './data/niveles.mock'
-import { featuredReports } from './data/reports.mock'
-import { communityReports } from './data/communityReports.mock'
+
+/** Reportes que ocupan la sección de archivos destacados. */
+const FEATURED_COUNT = 3
+
+/** Reportes que caben en la rejilla de registros de la comunidad. */
+const COMMUNITY_COUNT = 5
 
 const router = useRouter()
+
+const { data: archive, isPending, isError, refetch } = useReport()
+
+const reports = computed(() => archive.value?.data ?? [])
+
+/**
+ * La primera sección muestra los tres primeros reportes y la segunda los cinco
+ * siguientes; el resto solo aparece en el archivo completo (`/reports`).
+ */
+const featuredReports = computed(() => reports.value.slice(0, FEATURED_COUNT))
+const communityReports = computed(() =>
+  reports.value.slice(FEATURED_COUNT, FEATURED_COUNT + COMMUNITY_COUNT),
+)
 
 const firstLevel = niveles[0]
 if (!firstLevel) {
@@ -64,13 +82,11 @@ function exploreLevel() {
 }
 
 function publishFinding() {
-  // TODO: navegar al formulario de publicación cuando exista la ruta correspondiente.
-  console.info('Publicar un hallazgo')
+  router.push({ name: 'report-create' })
 }
 
 function viewAllRegisters() {
-  // TODO: navegar al listado completo de registros cuando exista la ruta correspondiente.
-  console.info('Ver todos los registros')
+  router.push({ name: 'reports' })
 }
 
 function openTerms() {
@@ -109,18 +125,45 @@ function openTerminal() {
       </main>
     </section>
 
-    <FeaturedReportsSection
-      :reports="featuredReports"
-      @select="selectReport"
-      @explore-more="exploreMoreLevels"
-    />
+    <p
+      v-if="isPending"
+      aria-live="polite"
+      class="px-5 py-14 font-mono text-xs text-neutral-500 uppercase md:px-12 md:py-20"
+    >
+      Recuperando el archivo de reportes…
+    </p>
 
-    <CommunityRegisterSection
-      :reports="communityReports"
-      @select="selectReport"
-      @publish="publishFinding"
-      @view-all="viewAllRegisters"
-    />
+    <div
+      v-else-if="isError"
+      role="alert"
+      class="flex flex-col items-start gap-3 px-5 py-14 md:px-12 md:py-20"
+    >
+      <p class="font-mono text-xs text-neutral-500 uppercase">
+        No se pudo recuperar el archivo de reportes.
+      </p>
+      <button
+        type="button"
+        class="border border-white/20 px-3 py-1.5 font-mono text-[10px] tracking-[0.22em] text-neutral-300 uppercase transition-colors hover:border-white/40 hover:text-white"
+        @click="refetch()"
+      >
+        Reintentar
+      </button>
+    </div>
+
+    <template v-else>
+      <FeaturedReportsSection
+        :reports="featuredReports"
+        @select="selectReport"
+        @explore-more="exploreMoreLevels"
+      />
+
+      <CommunityRegisterSection
+        :reports="communityReports"
+        @select="selectReport"
+        @publish="publishFinding"
+        @view-all="viewAllRegisters"
+      />
+    </template>
 
     <Footer
       @terms-click="openTerms"

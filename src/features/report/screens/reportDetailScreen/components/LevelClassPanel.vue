@@ -44,7 +44,7 @@ const specs = computed(() => [
           id="clasificacion-titulo"
           class="text-xl font-bold tracking-wide text-white/40 uppercase"
         >
-          {{ levelClass.classNumber }}
+          Clase {{ levelClass.classNumber }}
         </h2>
       </div>
     </div>

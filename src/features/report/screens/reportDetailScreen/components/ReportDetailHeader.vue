@@ -35,7 +35,7 @@ const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
       <div
         class="mt-4 flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-[0.12em] text-white/45 uppercase sm:gap-4"
       >
-        <span class="text-neutral-300">Nivel {{ report.nivel }}</span>
+        <span class="text-neutral-300">{{ report.nivel }}</span>
         <span aria-hidden="true" class="text-white/20">|</span>
         <time :datetime="report.createdAt">{{ publishedAt }}</time>
         <span aria-hidden="true" class="text-white/20">|</span>
@@ -80,15 +80,6 @@ const publishedAt = computed(() => formatArchiveDate(props.report.createdAt))
           />
         </svg>
         <span>{{ report.likesCount }} Me gusta</span>
-      </button>
-
-      <button
-        type="button"
-        aria-label="Más acciones sobre el reporte"
-        class="border border-white/10 px-3.5 py-2 font-mono text-sm tracking-[0.12em] text-white/50 outline-none transition-colors hover:border-white/30 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
-        @click="emit('options', report.id)"
-      >
-        <span aria-hidden="true">···</span>
       </button>
     </div>
   </header>

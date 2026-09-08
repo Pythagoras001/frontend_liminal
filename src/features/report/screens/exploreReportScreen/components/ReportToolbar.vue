@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import type {
-  ReportSortOption,
-  ReportSortOrder,
-} from '@/features/report/hooks/useReportArchiveFilters'
-
 interface Props {
-  sortOptions: ReportSortOption[]
   /** Total de reportes del archivo, no solo los de la página actual. */
   total: number
   /** Id de la rejilla que la búsqueda filtra, para enlazarla con `aria-controls`. */
@@ -15,14 +9,6 @@ interface Props {
 defineProps<Props>()
 
 const search = defineModel<string>('search', { required: true })
-const sortOrder = defineModel<ReportSortOrder>('sortOrder', { required: true })
-
-const emit = defineEmits<{
-  filter: []
-}>()
-
-const CONTROL_CLASS =
-  'inline-flex items-center gap-2 rounded border border-white/10 bg-liminal-surface px-3.5 py-2 font-mono text-xs tracking-[0.08em] text-white/60 uppercase outline-none transition-colors hover:border-white/25 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary'
 </script>
 
 <template>
@@ -57,52 +43,6 @@ const CONTROL_CLASS =
             placeholder="Buscar por título o nivel"
             class="w-full rounded border border-white/10 bg-liminal-surface py-2 pr-3 pl-9 font-mono text-xs text-white placeholder-white/35 outline-none transition-colors focus:border-liminal-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
           />
-        </div>
-
-        <button type="button" :class="CONTROL_CLASS" @click="emit('filter')">
-          <svg
-            aria-hidden="true"
-            class="h-3.5 w-3.5 text-white/45"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          <span>Filtrar</span>
-        </button>
-
-        <div class="relative">
-          <label class="sr-only" for="report-sort">Ordenar reportes</label>
-          <select
-            id="report-sort"
-            v-model="sortOrder"
-            :class="[CONTROL_CLASS, 'appearance-none pr-9']"
-          >
-            <option
-              v-for="option in sortOptions"
-              :key="option.value"
-              :value="option.value"
-              class="bg-liminal-surface text-white"
-            >
-              {{ option.label }}
-            </option>
-          </select>
-          <svg
-            aria-hidden="true"
-            class="pointer-events-none absolute inset-y-0 right-3 my-auto h-3.5 w-3.5 text-white/45"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
         </div>
       </div>
 

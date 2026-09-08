@@ -46,16 +46,5 @@ const emit = defineEmits<{
         @select="emit('select', $event)"
       />
     </div>
-
-    <div class="mt-8 flex justify-end">
-      <button
-        type="button"
-        class="group inline-flex items-center gap-2 rounded font-mono text-xs font-bold tracking-[0.14em] text-liminal-primary uppercase outline-none transition-colors hover:text-liminal-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
-        @click="emit('learnMore')"
-      >
-        <span>Conocer el sistema de clasificación</span>
-        <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
-      </button>
-    </div>
   </section>
 </template>

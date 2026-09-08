@@ -56,9 +56,11 @@ const imageAlt = computed(() => `${props.report.description} — Nivel ${props.r
         <span
           class="flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] text-white/45 uppercase"
         >
-          <span>Nivel {{ report.nivel }}</span>
+          <span>{{ report.nivel }}</span>
           <span aria-hidden="true" class="text-white/20">|</span>
-          <span class="font-medium text-liminal-primary">{{ report.levelClass.classNumber }}</span>
+          <span class="font-medium text-liminal-primary"
+            >Clase {{ report.levelClass.classNumber }}</span
+          >
         </span>
 
         <h3

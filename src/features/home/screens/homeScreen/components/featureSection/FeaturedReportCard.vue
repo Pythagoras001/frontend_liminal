@@ -43,7 +43,7 @@ const clasificacion = computed(() =>
 
     <span class="flex flex-col gap-2 px-4 py-3 md:px-5">
       <span class="text-sm font-bold tracking-wide text-white uppercase md:text-base">
-        NIVEL {{ report.nivel }} • {{ report.levelClass.type }}
+        NIVEL {{ report.nivel }} • Clase {{ report.levelClass.classNumber }}
       </span>
       <span class="h-px w-full bg-white/10" />
       <span
