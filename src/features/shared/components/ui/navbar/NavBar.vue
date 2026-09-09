@@ -46,12 +46,6 @@ const displayName = computed(
 const displayAvatar = computed(
   () => props.avatarUrl ?? currentUser.value?.profileImage?.thumbnailUrl,
 )
-
-const emit = defineEmits<{
-  filterClick: []
-  searchClick: []
-  menuClick: []
-}>()
 </script>
 
 <template>
@@ -117,32 +111,6 @@ const emit = defineEmits<{
       >
         Ingresar
       </RouterLink>
-
-      <button
-        type="button"
-        class="rounded p-1.5 text-white/80 outline-none transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
-        aria-label="Buscar archivo"
-        @click="emit('searchClick')"
-      >
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
-
-      <button
-        type="button"
-        class="rounded p-1.5 text-white/80 outline-none transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-liminal-primary"
-        aria-label="Menú principal"
-        @click="emit('menuClick')"
-      >
-        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
     </div>
   </header>
 </template>
