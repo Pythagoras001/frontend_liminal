@@ -4,12 +4,6 @@ import type { Report } from '@/features/report/model/Report'
 import type { NewReportDraft } from '@/features/report/model/NewReportDraft'
 import type { UpdateReportPayload } from '@/features/report/model/EditReportDraft'
 
-/**
- * Traduce el borrador del formulario al `multipart/form-data` que espera el
- * servidor: los ficheros y sus descripciones viajan en campos paralelos
- * (`galeryEvidences` / `galeryEvidencesDescriptions`), repetidos en el mismo
- * orden, uno por evidencia de la galería.
- */
 function toFormData(draft: NewReportDraft): FormData {
   const formData = new FormData()
 
@@ -57,36 +51,16 @@ export const ReportApi = {
     return data
   },
 
-  /**
-   * Valora un reporte. El servidor identifica al votante por el token y hace el
-   * toggle por su cuenta: si ya figuraba entre quienes lo valoraron, retira su
-   * valoración. Devuelve el reporte con `likesCount` ya recalculado, que es lo
-   * único que la interfaz necesita pintar.
-   */
   async rate(reportId: number, liked: boolean): Promise<Report> {
     const { data } = await ApiClient.patch<Report>('/report', { reportId, liked })
 
     return data
   },
 
-  /**
-   * Elimina un reporte. El servidor comprueba contra el token que quien pide el
-   * borrado es su autor y responde `204 No Content`: no hay cuerpo que leer, así
-   * que la interfaz ajusta su caché por su cuenta.
-   */
   async remove(id: number): Promise<void> {
     await ApiClient.delete(`/report/${id}`)
   },
 
-  /**
-   * Actualiza un reporte propio. El servidor comprueba contra el token que quien
-   * edita es su autor y responde con el expediente ya actualizado.
-   *
-   * Va como JSON y no como `multipart/form-data` porque la edición no toca las
-   * evidencias: solo el título, el nivel, la clase y el relato. Los cuatro
-   * campos son opcionales para el servidor, así que se manda únicamente lo que
-   * cambió y el resto se queda como estaba.
-   */
   async update(id: number, payload: UpdateReportPayload): Promise<Report> {
     const { data } = await ApiClient.patch<Report>(`/report/${id}`, payload)
 
@@ -94,9 +68,6 @@ export const ReportApi = {
   },
 
   async create(draft: NewReportDraft): Promise<Report> {
-    // Sin esta cabecera Axios convertiría el `FormData` a JSON, porque la
-    // instancia declara `application/json` por defecto. El navegador la
-    // reemplaza después por la suya, ya con el `boundary`.
     const { data } = await ApiClient.post<Report>('/report', toFormData(draft), {
       headers: { 'Content-Type': 'multipart/form-data' },
     })

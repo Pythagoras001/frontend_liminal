@@ -9,6 +9,7 @@ import { clearAuthToken, getAuthToken, setAuthToken } from '@/services/api/authT
  * ambos en sincronía, así que hay que cambiar el token siempre por aquí.
  */
 export const useAuthStore = defineStore('auth', () => {
+  
   const token = shallowRef<string | null>(getAuthToken())
 
   const isAuthenticated = computed(() => !!token.value)

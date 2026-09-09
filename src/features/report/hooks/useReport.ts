@@ -12,11 +12,6 @@ export function useReport(page: MaybeRefOrGetter<number> = 1) {
   })
 }
 
-/**
- * Reportes publicados por el usuario autenticado (`/report/me`). La clave se
- * mantiene aparte de la del archivo público para que ambas listas no compartan
- * caché aunque pidan la misma página.
- */
 export function useReportsByAuthor(page: MaybeRefOrGetter<number> = 1) {
   return useQuery({
     queryKey: ['reports', 'me', page],
@@ -24,11 +19,6 @@ export function useReportsByAuthor(page: MaybeRefOrGetter<number> = 1) {
   })
 }
 
-/**
- * Pide un reporte concreto. La ruta `/reports/:id` entrega el identificador
- * como cadena, así que la pantalla lo convierte antes de pasarlo; la petición
- * espera a que sea un número válido para no llamar al servidor con `NaN`.
- */
 export function useReportById(id: MaybeRefOrGetter<number>) {
   const reportId = computed(() => toValue(id))
 
@@ -39,15 +29,6 @@ export function useReportById(id: MaybeRefOrGetter<number>) {
   })
 }
 
-/**
- * Valora un reporte. El toggle lo resuelve el servidor a partir del token, así
- * que la interfaz no lleva la cuenta de si el explorador ya lo había valorado.
- *
- * De la respuesta solo se aprovecha `likesCount`: el expediente que devuelve
- * valorar puede venir sin sus relaciones (autor, clase, evidencias) y meterlo
- * entero en la caché dejaría al detalle pintando campos inexistentes. Los
- * listados se invalidan porque cada uno guarda su propia copia del reporte.
- */
 export function useRateReport() {
   const queryClient = useQueryClient()
 
@@ -63,20 +44,6 @@ export function useRateReport() {
   })
 }
 
-/**
- * Guarda los cambios del modal de edición de reporte.
- *
- * La caché se ajusta a mano en vez de invalidarla: el expediente ya editado se
- * escribe en el detalle y en las fichas que lo tuvieran dentro de los listados
- * guardados. El prefijo `['reports']` alcanza a la vez el archivo público
- * (`['reports', page]`) y el personal (`['reports', 'me', page]`).
- *
- * Del expediente que responde el servidor solo se copian los campos que el
- * modal edita, por el mismo motivo que en `useRateReport`: la respuesta puede
- * venir sin sus relaciones (autor, evidencias) y volcarla entera dejaría al
- * detalle pintando campos inexistentes. `levelClass` se toma solo cuando llega,
- * porque de él depende el panel de clasificación.
- */
 export function useEditReport() {
   const queryClient = useQueryClient()
 
@@ -110,22 +77,6 @@ export function useEditReport() {
   })
 }
 
-/**
- * Borra un reporte propio. El servidor decide con el token si quien lo pide es
- * el autor, así que la comprobación que hace la interfaz solo sirve para no
- * ofrecer un botón que iba a fallar.
- *
- * La respuesta llega vacía (`204`), de modo que la caché se ajusta a mano en vez
- * de invalidar: se descarta el detalle y se quita la ficha de las páginas que la
- * tuvieran. El prefijo `['reports']` alcanza a la vez el archivo público
- * (`['reports', page]`) y el personal (`['reports', 'me', page]`).
- *
- * El `total` baja en todas las páginas guardadas, también en las que no
- * contenían el reporte, porque es la cuenta del archivo entero. Lo que no se
- * puede arreglar sin volver a preguntar es el desplazamiento: los reportes que
- * venían detrás siguen en la página en la que se pidieron hasta el próximo
- * fetch.
- */
 export function useDeleteReport() {
   const queryClient = useQueryClient()
 
