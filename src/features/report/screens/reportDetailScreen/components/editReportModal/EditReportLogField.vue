@@ -3,12 +3,6 @@ import { useId } from 'vue'
 
 interface Props {
   label: string
-  /**
-   * Nombre del registro que el diseño muestra a la derecha de la etiqueta, ej.
-   * "LOG_001.TXT". Es decorativo: identifica el expediente, no un fichero real.
-   */
-  logName: string
-  /** Mensaje de validación mostrado bajo el control. */
   error?: string
 }
 
@@ -31,10 +25,6 @@ const errorId = useId()
       >
         {{ label }}
       </label>
-
-      <span aria-hidden="true" class="font-mono text-[10px] tracking-[0.18em] text-white/30">
-        {{ logName }}
-      </span>
     </div>
 
     <textarea

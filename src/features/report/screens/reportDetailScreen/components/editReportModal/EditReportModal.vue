@@ -50,12 +50,6 @@ const descriptionError = computed(() =>
 )
 
 /**
- * Nombre decorativo del registro, con el mismo número de expediente que usa el
- * detalle: "LOG_001.TXT".
- */
-const logName = computed(() => `LOG_${String(props.report.id).padStart(3, '0')}.TXT`)
-
-/**
  * Lo que se enviaría ahora mismo: solo los campos que difieren del expediente.
  * Vacío mientras no se toque nada, y entonces el botón de guardar queda inerte.
  */
@@ -107,10 +101,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
           class="flex items-center justify-between border-b border-white/10 bg-liminal-bg px-6 py-4"
         >
           <p :id="titleId" class="flex items-center gap-2.5">
-            <span
-              aria-hidden="true"
-              class="inline-block h-2 w-2 animate-pulse rounded-full bg-liminal-primary shadow-[0_0_8px_#ffb800]"
-            ></span>
             <span
               class="font-mono text-xs font-semibold tracking-[0.2em] text-liminal-primary uppercase"
             >
@@ -164,7 +154,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
             <EditReportLogField
               v-model="form.description"
               label="Registro de observación"
-              :log-name="logName"
               :error="descriptionError"
             />
 

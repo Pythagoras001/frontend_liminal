@@ -35,9 +35,7 @@ export function useRateReport() {
     mutationFn: ({ reportId, liked }: { reportId: number; liked: boolean }) =>
       ReportApi.rate(reportId, liked),
     onSuccess: (report: Report) => {
-      queryClient.setQueryData<Report>(['report', report.id], (current) =>
-        current ? { ...current, likesCount: report.likesCount } : current,
-      )
+      queryClient.invalidateQueries({ queryKey: ['report', report.id] })
       queryClient.invalidateQueries({ queryKey: ['reports'] })
     },
   })
