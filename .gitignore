@@ -16,6 +16,9 @@ coverage
 .env
 .env.*
 
+# MCP config
+.mcp.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
